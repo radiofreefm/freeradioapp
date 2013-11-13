@@ -6,14 +6,14 @@
         id        = "com.phonegap.hello-world"
         version   = "1.0.0">
 
-    <name>Hello World</name>
+    <name>Freie Radios</name>
 
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Freie Radios in Baden-Württemberg und Deutschland
     </description>
 
     <author href="http://phonegap.com" email="support@phonegap.com">
-        PhoneGap Team
+        fg
     </author>
 
     <!--
