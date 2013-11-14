@@ -46,6 +46,19 @@ $(document).ready(function(){
 	  target: 'map',
 	  view: startview 
 	});
+
+	var lonLat = new ol.LonLat( -0.1279688 ,51.5077286 )
+          .transform(
+            new ol.Projection("EPSG:4326"), // Transformation aus dem Koordinatensystem WGS 1984
+            map.getProjectionObject() // in das Koordinatensystem 'Spherical Mercator Projection'
+          );
+ 
+    var markers = new ol.Layer.Markers( "Markers" );
+    map.addLayer(markers);
+ 
+    markers.addMarker(new ol.Marker(lonLat));
+ 
+    map.setCenter (lonLat, zoom);
 	
 	//Resizen der Map
 	$(window).resize(function() {
