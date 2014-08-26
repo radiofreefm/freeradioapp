@@ -68,6 +68,15 @@ body {
     width: 0;
 }
 
+
+/********************************************* 
+ * jQuery Mobile Edits
+ *********************************************/
+
+.navigation-tabs {
+    padding: 0;
+}
+
 .ui-panel-position-left.ui-panel-display-reveal {
     left: 0;
 }
@@ -82,6 +91,6 @@ body {
     -webkit-transform: translate3d(15em,0,0);
     -moz-transform: translate3d(15em,0,0);
     transform: translate3d(15em,0,0);
-}*/
+}
 
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<freeradioapp>
+	 <stationlist>
+	 	<station lastupdate="2013-08-21T15:07:38.6875000+02:00">
+	 		<name>Radio StHörfunk</name>
+	 		<city>Schwäbisch Hall</city>
+	 		<xmluri>http://www.sthoerfunk.de/station.xml</xmluri>
+	 		<frequency>97.5 MHz</frequency>
+	 	</station>
+	 </stationlist>
+</freeradioapp> 

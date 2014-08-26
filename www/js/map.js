@@ -1,4 +1,11 @@
-﻿//Globals
+﻿/*
+ * FREIE RADIO APP
+ * https://github.com/radiofreefm/freeradioapp/
+ *
+ * Map
+ */
+
+//Globals
 var map;
 var gpswatch;
 var gpsmarker;
@@ -226,7 +233,9 @@ function setmapsize(){
 	var headhigh = $('[data-role="header"]').first().outerHeight(); //Get height of first page's header
 	var foothigh = $('[data-role="footer"]').first().outerHeight(); //Get height of first page's header
 	var $content=$('[data-role="content"]');
-	var contentpaddingheight=parseInt($content.css("padding-top").replace("px", ""))+parseInt($('[data-role="content"]').css("padding-bottom").replace("px", ""));
+	var contentpaddingheight = parseInt($content.css("padding-top").replace("px", ""))
+								+ parseInt($('[data-role="content"]').css("padding-bottom").replace("px", ""));
+
 	winhigh = winhigh - headhigh - foothigh - contentpaddingheight; 
-	$("#map").css('height',winhigh + 'px'); //Change div to maximum visible area
+	$("#map").css('height', winhigh + 'px'); //Change div to maximum visible area
 }
