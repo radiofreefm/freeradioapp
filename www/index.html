@@ -10,17 +10,7 @@
 	<script src="js/lib/jquery.min.js"></script>
 	<script src="js/lib/jquery.mobile.min.js"></script>
 	<script src="js/lib/angular.min.js"></script>
-	<script src="js/lib/xml2json.min.js"></script>
-
-	<!-- Mapping -->
-	<script src="js/lib/ol3.js" ></script>
-	<script src="js/map.js" ></script>
-	<script src="js/compass.js" ></script>
-	<!-- /Mapping -->
-
-	<script src="js/freeradioapp.js"></script>
-	<script src="js/services.js"></script>
-	<script src="js/controllers.js"></script>
+	<script src="js/lib/xml2json.js"></script>
 	<title>free radio app</title>
 </head>
 <body>
@@ -105,7 +95,7 @@
 			<div id="tab-list" class="ui-content">
 				<ul data-role="listview" data-filter="true" data-filter-placeholder="Search stations..." data-inset="true">
 				    <li ng-repeat="station in meta.stationlist.station">
-				    	<a href="#page-detail" data-transition="slidefade" ng-click="selectStation(station._id)">
+				    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id)">
 				    		<h3>{{station.name}}</h3>
 				    		<p>{{station.city}} | {{station.frequency}} MHz</p>
 				    	</a>
@@ -120,9 +110,9 @@
 <!-- /END Page:Main -->
 
 <!-- Page:Detail -->
-<div data-role="page" id="page-detail" data-theme="a">
+<div data-role="page" id="page-detail" data-theme="a"  ng-controller="StationController">
 	<div id="head" data-theme="a" data-role="header" data-position="fixed">
-	    <h3>Info</h3>
+	    <h3 ng-bind="stationdata.info.fullname">Stationsname</h3>
 	    <a href="#page-main" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
 	</div>
 	<!-- Content -->
@@ -141,19 +131,49 @@
 			
 	        <!-- Tab:Info -->
 			<div id="tab-detail-info" class="ui-content">
-				Info
+				<div class="ui-grid-a">
+					<div class="ui-block-a"><img ng-src="{{stationdata.station.info.logo._src}}"/></div>
+					<div class="ui-block-b">
+						{{stationdata.info.city}}<br/>
+						{{stationdata.mediaChannels.transmitter.frequency}} {{stationdata.mediaChannels.transmitter.frequencyunit}}
+					</div>
+				</div>
+				<div class="ui-body ui-body-a ui-corner-all">
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</div>
 			</div>
 			<!-- /END Tab:Info -->
 		    
 		    <!-- Tab:Liste -->
 			<div id="tab-detail-program" class="ui-content">
-				Programm
+				<!-- <div ng-repeat="">
+				</div> -->
 			</div>
 			<!-- /END Tab:Liste -->
 
 			<!-- Tab:Kontakt -->
 			<div id="tab-detail-contact" class="ui-content">
-				Kontakt
+				<div class="ui-body ui-body-a ui-corner-all">
+					<h4>B&uuml;ro und Studio</h4>
+					{{stationdata.info.fullname}}<br/>
+					{{stationdata.info.studio.street}} {{stationdata.info.studio.number}}<br/>
+					{{stationdata.info.studio.zip}} {{stationdata.info.studio.city}}<br/>
+				</div>
+				<div class="ui-body ui-body-a ui-corner-all">
+					<h4>&Ouml;ffnungszeiten</h4>
+					werktags {{stationdata.info.studio.open["_time-from"]}} - {{stationdata.info.studio.open["_time-to"]}}
+				</div>
+				<div class="ui-body ui-body-a ui-corner-all">
+					<h4>Telefon</h4>
+					<div ng-repeat="phone in stationdata.info.studio.phone">
+						{{phone._type}} : {{phone.__text}}
+					</div>
+				</div>
 			</div>
 			<!-- /END Tab:Kontakt -->
 		</div>
@@ -162,25 +182,29 @@
 </div>
 <!-- /END Page:Detail -->
 
- <!-- Page:Info -->
-<div data-role="page" id="page-info" data-theme="a">
+ <!-- Page:Favoriten -->
+<div data-role="page" id="page-favorites" data-theme="a">
 	<div id="head" data-theme="a" data-role="header" data-position="fixed">
-	    <h3>Info</h3>
+	    <h3>Favorites</h3>
 	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
 	</div>
 	<div data-role="content">
-		<div style="font-size:14px; padding: 12px;" >
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		</div>
+		
 	</div>
 </div>
-<!-- /END Page:Info -->
+<!-- /END Page:Favoriten -->
 
 </div>
 </body>
+<!-- Scripts at end of page -->
+	<!-- Mapping -->
+	<script src="js/lib/ol3.js" ></script>
+	<script src="js/map.js" ></script>
+	<script src="js/compass.js" ></script>
+	<!-- /Mapping -->
+
+	<script src="js/freeradioapp.js"></script>
+	<script src="js/services.js"></script>
+	<script src="js/controllers.js"></script>
+<!-- /Scripts at end of page -->
 </html>
