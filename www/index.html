@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html >
+<html lang="de" ng-app="FreeRadioApp">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +10,7 @@
 	<script src="js/lib/jquery.min.js"></script>
 	<script src="js/lib/jquery.mobile.min.js"></script>
 	<script src="js/lib/angular.min.js"></script>
-	<script src="js/lib/xml2json.js" ></script>
+	<script src="js/lib/xml2json.min.js"></script>
 
 	<!-- Mapping -->
 	<script src="js/lib/ol3.js" ></script>
@@ -19,6 +19,8 @@
 	<!-- /Mapping -->
 
 	<script src="js/freeradioapp.js"></script>
+	<script src="js/services.js"></script>
+	<script src="js/controllers.js"></script>
 	<title>free radio app</title>
 </head>
 <body>
@@ -26,14 +28,21 @@
 <!-- External:Header -->
 <div id="head" data-theme="a" data-role="header" data-position="fixed">
     <h3>Freie Radios</h3>
-    <a href="#nav-panel" data-icon="bars" class="ui-btn-left" data-theme="a"></a>
-    <a href="#popupMenu" data-rel="popup" data-position-to="window" data-inline="true" data-icon="info" data-transition="pop"  data-iconpos="notext">Info</a>
+    <a href="#nav-popup" data-icon="bars" data-rel="popup" data-transition="slidedown" data-iconpos="notext" class="ui-btn-left" data-theme="a">Menu</a>
+    <!-- <a href="#page-info" data-rel="page" data-icon="info" data-transition="slidefade"  data-iconpos="notext">Info</a> -->
 </div>
 <!-- /END External:Header -->
 
-<!-- External:Panel -->
-<div data-role="panel" data-position="left" data-position-fixed="true" data-display="overlay" data-theme="a" id="nav-panel">
-	<a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+<!-- External:Popup -->
+<div data-role="popup" data-theme="a" id="nav-popup">
+	<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+	<ul data-role="listview" data-inset="true" data-theme="a" data-divider-theme="a">
+	    <li><a href="#">Suche </a></li>
+	    <li><a href="#">Favoriten</a></li>
+	    <li><a href="#page-info">Info</a></li>
+	    <li><a href="#">Ortung</a></li>
+	    <li><a href="#">Sendeplan</a></li>
+	</ul>
 <!--  OLD
 	<br>
 
@@ -68,31 +77,12 @@
 	  <label for="openaereal">MapQuest Open Aerial</label>
 	</fieldset> -->
 </div>
-<!-- /END External:Panel --> 
-
- <!-- /info popup -->
-<div data-role="popup" id="popupMenu" data-theme="a" class="ui-corner-all">
-	<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-	<div data-role="header" data-theme="a" class="ui-corner-top">
-		<h1>Free Radio</h1>
-	</div>
-	<div data-role="content" data-theme="a" class="ui-corner-bottom ui-content">
-		<div style="font-size:14px; padding: 12px;" >
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-		</div>
-	</div>
-</div>
-<!-- /Ende info popup -->
+<!-- /END External:Popup --> 
 
 <!-- Page:Main -->
-<div data-role="page" id="page-main" data-theme="a">
+<div data-role="page" id="page-main" data-theme="a" ng-controller="MetaController">
 	<!-- Content -->
-	<div id="main-content" class="ui-content" data-role="main">
+	<div id="main-content" data-role="main">
 		<div id="main-tabs" class="navigation-tabs" data-role="tabs">
 			<!-- navbar -->
 			<div data-role="navbar">
@@ -113,11 +103,11 @@
 
 			<!-- Tab:List -->
 			<div id="tab-list" class="ui-content">
-				<ul data-role="listview" data-filter="true" data-filter-placeholder="Search fruits..." data-inset="true">
-				    <li>
-				    	<a href="#">
-				    		<h3>Radio Free FM</h3>
-				    		<p>Ulm | 126,4 MHz</p>
+				<ul data-role="listview" data-filter="true" data-filter-placeholder="Search stations..." data-inset="true">
+				    <li ng-repeat="station in meta.stationlist.station">
+				    	<a href="#page-detail" data-transition="slidefade" ng-click="selectStation(station._id)">
+				    		<h3>{{station.name}}</h3>
+				    		<p>{{station.city}} | {{station.frequency}} MHz</p>
 				    	</a>
 				    </li>
 				</ul>
@@ -130,7 +120,11 @@
 <!-- /END Page:Main -->
 
 <!-- Page:Detail -->
-<div data-role="page" id="detail-page" data-theme="a">
+<div data-role="page" id="page-detail" data-theme="a">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3>Info</h3>
+	    <a href="#page-main" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+	</div>
 	<!-- Content -->
 	<div id="detail-content" class="ui-content" data-role="main">
 		<div id="detail-tabs" class="navigation-tabs" data-role="tabs">
@@ -138,7 +132,7 @@
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#tab-detail-info" data-theme="a" class="ui-btn-active" data-ajax="false">Info</a></li>
-					<li><a href="#tab-detail-program" data-theme="a" data-ajax="false">Liste</a></li>
+					<li><a href="#tab-detail-program" data-theme="a" data-ajax="false">Programm</a></li>
 					<li><a href="#tab-detail-contact" data-theme="a" data-ajax="false">Kontakt</a></li>
 				</ul>
 			</div>
@@ -152,8 +146,8 @@
 			<!-- /END Tab:Info -->
 		    
 		    <!-- Tab:Liste -->
-			<div id="tab-detail-liste" class="ui-content">
-				Liste
+			<div id="tab-detail-program" class="ui-content">
+				Programm
 			</div>
 			<!-- /END Tab:Liste -->
 
@@ -167,6 +161,25 @@
 	<!-- /END Content -->
 </div>
 <!-- /END Page:Detail -->
+
+ <!-- Page:Info -->
+<div data-role="page" id="page-info" data-theme="a">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3>Info</h3>
+	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+	</div>
+	<div data-role="content">
+		<div style="font-size:14px; padding: 12px;" >
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</div>
+	</div>
+</div>
+<!-- /END Page:Info -->
 
 </div>
 </body>

@@ -114,8 +114,6 @@ $(document).ready(function(){
 		 });
 		layers[$(this).val()].setVisible(true);
 	});
-	
-
 });
 
 //Aktuelle Mapparameter ausgeben (Hilfsfunktion)

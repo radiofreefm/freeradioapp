@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<freeradioapp>
+<freeradioapp lastupdate="2013-08-21T15:07:38.6875000+02:00" xmlns:gml="http://www.opengis.net/gml">
 	 <stationlist>
 	 	<station lastupdate="2013-08-21T15:07:38.6875000+02:00">
 	 		<name>Radio StHörfunk</name>
 	 		<city>Schwäbisch Hall</city>
 	 		<xmluri>http://www.sthoerfunk.de/station.xml</xmluri>
-	 		<frequency>97.5 MHz</frequency>
+	 		<frequency>97.5</frequency>
+	 	</station>
+	 	<station lastupdate="2013-08-21T15:07:38.6875000+02:00">
+	 		<name>Free FM</name>
+	 		<city>Ulm</city>
+	 		<xmluri>http://www.freefm.de/station.xml</xmluri>
+	 		<frequency>126,4</frequency>
 	 	</station>
 	 </stationlist>
 </freeradioapp> 
