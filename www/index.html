@@ -28,7 +28,7 @@
 	<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
 	<ul data-role="listview" data-inset="true" data-theme="a" data-divider-theme="a">
 	    <li><a href="#">Suche </a></li>
-	    <li><a href="#">Favoriten</a></li>
+	    <li><a href="#page-favorites">Favoriten</a></li>
 	    <li><a href="#page-info">Info</a></li>
 	    <li><a href="#">Ortung</a></li>
 	    <li><a href="#">Sendeplan</a></li>
@@ -95,7 +95,7 @@
 			<div id="tab-list" class="ui-content">
 				<ul data-role="listview" data-filter="true" data-filter-placeholder="Search stations..." data-inset="true">
 				    <li ng-repeat="station in meta.stationlist.station">
-				    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id)">
+				    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id, station.name)">
 				    		<h3>{{station.name}}</h3>
 				    		<p>{{station.city}} | {{station.frequency}} MHz</p>
 				    	</a>
@@ -189,7 +189,29 @@
 	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
 	</div>
 	<div data-role="content">
-		
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+</div>
+<!-- /END Page:Favoriten -->
+
+ <!-- Page:Favoriten -->
+<div data-role="page" id="page-info" data-theme="a">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3>Info</h3>
+	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+	</div>
+	<div data-role="content">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 	</div>
 </div>
 <!-- /END Page:Favoriten -->

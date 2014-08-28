@@ -9,9 +9,9 @@
 freeradioapp.controller('MetaController', function ($scope, SharedStationService, MetaXMLService) {
 	$scope.meta = null;
 
-	$scope.handleStationSelect = function(id) {
-		console.log($scope.meta.stationlist.station[id].xmluri.hashCode());
-    	SharedStationService.prepForBroadcast($scope.meta.stationlist.station[id].xmluri);
+	$scope.handleStationSelect = function(id, name) {
+		console.log(name.hashCode());
+    	SharedStationService.prepForBroadcast($scope.meta.stationlist.station[id].xmluri, name);
     }
 
 	//This is the callback function
@@ -19,7 +19,7 @@ freeradioapp.controller('MetaController', function ($scope, SharedStationService
         $scope.meta = data.freeradioapp;
         console.log(data);
     }
-    MetaXMLService.get(setMetaData);
+    MetaXMLService.getLokal(setMetaData);
 });
 
 
@@ -31,12 +31,12 @@ freeradioapp.controller('StationController', function ($scope, $rootScope, Share
 		$scope.stationdata = data.station;
     }
 
-    selectStation = function(url) {
-    	StationXMLService.get(setStationData, url);
+    selectStation = function(url, name) {
+    	StationXMLService.getLokal(setStationData, url, name);
     }
 
     $rootScope.$on('handleBroadcast', function() {
-        stationdata = selectStation(SharedStationService.url);
+        stationdata = selectStation(SharedStationService.url, SharedStationService.name);
     });
 });
 

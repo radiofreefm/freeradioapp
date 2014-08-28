@@ -12,6 +12,7 @@
 
     sharedService.prepForBroadcast = function(url, name) {
         this.url = url;
+        this.name = name;
         this.broadcastItem();
     };
 
@@ -25,7 +26,8 @@
 freeradioapp.factory('MetaXMLService', ['$http', function($http){
 	var metaXMLService = {};
 
-	metaXMLService.get = function(callback){
+	metaXMLService.getLokal = function(callback){
+        // get lokal file
         $http.get(
             'data/meta.xml',
             {transformResponse:function(data) {
@@ -56,11 +58,13 @@ freeradioapp.factory('MetaXMLService', ['$http', function($http){
 freeradioapp.factory('StationXMLService', ['$http', function($http){
 	var stationXMLService = {};
 
-	stationXMLService.get = function(callback, xmlurl){
+	stationXMLService.getLokal = function(callback, xmlurl, name){
+
+        // get lokal file
         $http({
             method: 'GET',
             /* TODO: CORS problem with accessing remote xmls */
-            url: "data/"+xmlurl.hashCode()+".xml",
+            url: "data/"+name.hashCode()+".xml",
             headers:{
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
