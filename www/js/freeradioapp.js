@@ -5,6 +5,16 @@
  * Scripts for the App
  */
 
+
+
+/******************************
+ *  Angular                   *
+ ******************************/
+var freeradioapp = angular.module('FreeRadioApp', ["DeferredWithUpdate"]);
+freeradioapp.constant('META_EXPIRATION_DAYS', 30);
+freeradioapp.constant('STATION_EXPIRATION_DAYS', 7);
+
+
 /******************************
  *  HELPER                    *
  ******************************/
@@ -19,14 +29,9 @@
 $(document).ready(function(){
 
     /* jQuery Mobile External Inits */
-    $("body>[data-role='header']").toolbar();
+    //$("body>[data-role='header']").toolbar();
     $("body>[data-role='popup']").popup();
 });
-
-/******************************
- *  Angular                   *
- ******************************/
-var freeradioapp = angular.module('FreeRadioApp', []);
 
 
 

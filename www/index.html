@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="de" ng-app="FreeRadioApp">
 <head>
-	<meta charset="utf-8">
+	<metadata charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="css/jquery.mobile.min.css" />
 	<link rel="stylesheet" href="css/ol3.css" type="text/css">
@@ -10,67 +10,21 @@
 	<script src="js/lib/jquery.min.js"></script>
 	<script src="js/lib/jquery.mobile.min.js"></script>
 	<script src="js/lib/angular.min.js"></script>
+	<script src="js/lib/deferred-with-update.js"></script>
 	<script src="js/lib/xml2json.js"></script>
 	<title>free radio app</title>
 </head>
-<body>
-
-<!-- External:Header -->
-<div id="head" data-theme="a" data-role="header" data-position="fixed">
-    <h3>Freie Radios</h3>
-    <a href="#nav-popup" data-icon="bars" data-rel="popup" data-transition="slidedown" data-iconpos="notext" class="ui-btn-left" data-theme="a">Menu</a>
-    <!-- <a href="#page-info" data-rel="page" data-icon="info" data-transition="slidefade"  data-iconpos="notext">Info</a> -->
-</div>
-<!-- /END External:Header -->
-
-<!-- External:Popup -->
-<div data-role="popup" data-theme="a" id="nav-popup">
-	<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
-	<ul data-role="listview" data-inset="true" data-theme="a" data-divider-theme="a">
-	    <li><a href="#">Suche </a></li>
-	    <li><a href="#page-favorites">Favoriten</a></li>
-	    <li><a href="#page-info">Info</a></li>
-	    <li><a href="#">Ortung</a></li>
-	    <li><a href="#">Sendeplan</a></li>
-	</ul>
-<!--  OLD
-	<br>
-
-	<label for="gpsstatus">Watch GPS:</label>
-	<select name="gpsstatus" id="gpsstatus" data-role="flipswitch" data-mini="true" >
-	  <option value="off" selected>Off</option>
-	  <option value="on">On</option>
-	</select>
-	<div id="gpsmessage"></div>
-	<br>
-	<label for="compassstatus">Watch Compass:</label>
-	<select data-role="flipswitch" name="compassstatus" id="compassstatus" data-mini="true" >
-		<option value="off" selected>Off</option>
-		<option value="on">On</option>		
-	</select>
-
-	<div id="compassmapstatusdiv">
-	<label for="compassmapstatus">Rotate Map:</label>
-	<select data-role="flipswitch" name="compassmapstatus" id="compassmapstatus" data-mini="true" >
-		<option value="off" selected>Off</option>
-		<option value="on">On</option>		
-	</select>
-	</div>
-	<br>
-	<fieldset data-role="controlgroup"  data-mini="true" >
-	  <legend>Layer:</legend>
-	  <input name="bglayer" id="mapquest" type="radio" value="0" checked>
-	  <label for="mapquest">OSM MapQuest</label>
-	  <input name="bglayer" id="osm" type="radio" value="1" >
-	  <label for="osm">OSM Standard</label>
-	  <input name="bglayer" id="openaereal" type="radio" value="2" >
-	  <label for="openaereal">MapQuest Open Aerial</label>
-	</fieldset> -->
-</div>
-<!-- /END External:Popup --> 
+<body ng-controller="AppController">
 
 <!-- Page:Main -->
-<div data-role="page" id="page-main" data-theme="a" ng-controller="MetaController">
+<div data-role="page" id="page-main" data-theme="a">
+	<!-- Header -->
+	<div id="head" data-theme="a" data-role="header" data-position="fixed" class="ui-header ui-bar-a">
+	    <h3>Freie Radios</h3>
+	    <a href="#nav-popup" data-icon="bars" data-rel="popup" data-transition="slidedown" data-iconpos="notext" class="ui-btn-left" data-theme="a">Menu</a>
+	    <!-- <a href="#page-info" data-rel="page" data-icon="info" data-transition="slidefade"  data-iconpos="notext">Info</a> -->
+	</div>
+	<!-- /END Header -->
 	<!-- Content -->
 	<div id="main-content" data-role="main">
 		<div id="main-tabs" class="navigation-tabs" data-role="tabs">
@@ -93,8 +47,8 @@
 
 			<!-- Tab:List -->
 			<div id="tab-list" class="ui-content">
-				<ul data-role="listview" data-filter="true" data-filter-placeholder="Search stations..." data-inset="true">
-				    <li ng-repeat="station in meta.stationlist.station">
+				<ul data-role="listview" data-filter="true" data-filter-placeholder="Stationen durchsuchen..." data-inset="true">
+				    <li ng-repeat="station in metaData.stationlist.station">
 				    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id, station.name)">
 				    		<h3>{{station.name}}</h3>
 				    		<p>{{station.city}} | {{station.frequency}} MHz</p>
@@ -106,13 +60,58 @@
 		</div>
     </div>
 	<!-- /END Content -->
+	<!-- External:Popup -->
+	<div data-role="popup" data-theme="a" id="nav-popup">
+		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+		<ul data-role="listview" data-inset="true" data-theme="a" data-divider-theme="a">
+		    <li><a href="#page-search">Suche </a></li>
+		    <li><a href="#page-favorites">Favoriten</a></li>
+		    <li><a href="#page-info">Info</a></li>
+		    <li><a href="#">Ortung</a></li>
+		    <li><a href="#">Sendeplan</a></li>
+		</ul>
+	<!--  OLD
+		<br>
+
+		<label for="gpsstatus">Watch GPS:</label>
+		<select name="gpsstatus" id="gpsstatus" data-role="flipswitch" data-mini="true" >
+		  <option value="off" selected>Off</option>
+		  <option value="on">On</option>
+		</select>
+		<div id="gpsmessage"></div>
+		<br>
+		<label for="compassstatus">Watch Compass:</label>
+		<select data-role="flipswitch" name="compassstatus" id="compassstatus" data-mini="true" >
+			<option value="off" selected>Off</option>
+			<option value="on">On</option>		
+		</select>
+
+		<div id="compassmapstatusdiv">
+		<label for="compassmapstatus">Rotate Map:</label>
+		<select data-role="flipswitch" name="compassmapstatus" id="compassmapstatus" data-mini="true" >
+			<option value="off" selected>Off</option>
+			<option value="on">On</option>		
+		</select>
+		</div>
+		<br>
+		<fieldset data-role="controlgroup"  data-mini="true" >
+		  <legend>Layer:</legend>
+		  <input name="bglayer" id="mapquest" type="radio" value="0" checked>
+		  <label for="mapquest">OSM MapQuest</label>
+		  <input name="bglayer" id="osm" type="radio" value="1" >
+		  <label for="osm">OSM Standard</label>
+		  <input name="bglayer" id="openaereal" type="radio" value="2" >
+		  <label for="openaereal">MapQuest Open Aerial</label>
+		</fieldset> -->
+	</div>
+	<!-- /END External:Popup --> 
 </div>
 <!-- /END Page:Main -->
 
 <!-- Page:Detail -->
-<div data-role="page" id="page-detail" data-theme="a"  ng-controller="StationController">
+<div data-role="page" id="page-detail" data-theme="a" ng-controller="StationDetailController">
 	<div id="head" data-theme="a" data-role="header" data-position="fixed">
-	    <h3 ng-bind="stationdata.info.fullname">Stationsname</h3>
+	    <h3 ng-bind="selectedStationData.info.fullname">Stationsname</h3>
 	    <a href="#page-main" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
 	</div>
 	<!-- Content -->
@@ -132,10 +131,10 @@
 	        <!-- Tab:Info -->
 			<div id="tab-detail-info" class="ui-content">
 				<div class="ui-grid-a">
-					<div class="ui-block-a"><img ng-src="{{stationdata.station.info.logo._src}}"/></div>
+					<div class="ui-block-a"><img ng-src="{{selectedStationData.station.info.logo._src}}"/></div>
 					<div class="ui-block-b">
-						{{stationdata.info.city}}<br/>
-						{{stationdata.mediaChannels.transmitter.frequency}} {{stationdata.mediaChannels.transmitter.frequencyunit}}
+						{{selectedStationData.info.city}}<br/>
+						{{selectedStationData.mediaChannels.transmitter.frequency}} {{selectedStationData.mediaChannels.transmitter.frequencyunit}}
 					</div>
 				</div>
 				<div class="ui-body ui-body-a ui-corner-all">
@@ -149,28 +148,28 @@
 			</div>
 			<!-- /END Tab:Info -->
 		    
-		    <!-- Tab:Liste -->
+		    <!-- Tab:Programm -->
 			<div id="tab-detail-program" class="ui-content">
 				<!-- <div ng-repeat="">
 				</div> -->
 			</div>
-			<!-- /END Tab:Liste -->
+			<!-- /END Tab:Programm -->
 
 			<!-- Tab:Kontakt -->
 			<div id="tab-detail-contact" class="ui-content">
 				<div class="ui-body ui-body-a ui-corner-all">
 					<h4>B&uuml;ro und Studio</h4>
-					{{stationdata.info.fullname}}<br/>
-					{{stationdata.info.studio.street}} {{stationdata.info.studio.number}}<br/>
-					{{stationdata.info.studio.zip}} {{stationdata.info.studio.city}}<br/>
+					{{selectedStationData.info.fullname}}<br/>
+					{{selectedStationData.info.studio.street}} {{selectedStationData.info.studio.number}}<br/>
+					{{selectedStationData.info.studio.zip}} {{selectedStationData.info.studio.city}}<br/>
 				</div>
 				<div class="ui-body ui-body-a ui-corner-all">
 					<h4>&Ouml;ffnungszeiten</h4>
-					werktags {{stationdata.info.studio.open["_time-from"]}} - {{stationdata.info.studio.open["_time-to"]}}
+					werktags {{selectedStationData.info.studio.open["_time-from"]}} - {{selectedStationData.info.studio.open["_time-to"]}}
 				</div>
 				<div class="ui-body ui-body-a ui-corner-all">
 					<h4>Telefon</h4>
-					<div ng-repeat="phone in stationdata.info.studio.phone">
+					<div ng-repeat="phone in selectedStationData.info.studio.phone">
 						{{phone._type}} : {{phone.__text}}
 					</div>
 				</div>
@@ -182,7 +181,39 @@
 </div>
 <!-- /END Page:Detail -->
 
- <!-- Page:Favoriten -->
+
+<!-- Page:Suche -->
+<div data-role="page" id="page-search" data-theme="a" ng-controller="SearchController">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3>Search</h3>
+	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+	</div>
+	<div data-role="content">
+		<form>
+		     <label for="search-1">Suche:</label>
+		     <input type="search" name="search-1" id="search-1" value="" ng-model="searchTerm">
+		</form>
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Sender</li>
+		    <li ng-repeat="station in searchData.stations  | filter:searchTerm">
+		    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id, station.name)">
+		    		<h3>{{station.name}}</h3>
+		    		<p>{{station.city}} | {{station.frequency}} MHz</p>
+		    	</a>
+		    </li>
+		</ul>
+
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">Sendung</li>
+		    <li ng-repeat="broadcast in searchData.broadcasts  | filter:searchTerm">
+		    	<a href="#">{{broadcast.name}}</a>
+		    </li>
+		</ul>
+	</div>
+</div>
+<!-- /END Page:Suche -->
+
+<!-- Page:Favoriten -->
 <div data-role="page" id="page-favorites" data-theme="a">
 	<div id="head" data-theme="a" data-role="header" data-position="fixed">
 	    <h3>Favorites</h3>
@@ -199,7 +230,7 @@
 </div>
 <!-- /END Page:Favoriten -->
 
- <!-- Page:Favoriten -->
+ <!-- Page:Info -->
 <div data-role="page" id="page-info" data-theme="a">
 	<div id="head" data-theme="a" data-role="header" data-position="fixed">
 	    <h3>Info</h3>
@@ -214,7 +245,7 @@
 		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 	</div>
 </div>
-<!-- /END Page:Favoriten -->
+<!-- /END Page:Info -->
 
 </div>
 </body>
