@@ -23,13 +23,44 @@ freeradioapp.factory('SharedStationService', function($rootScope) {
     return sharedService;
 });
 
-freeradioapp.factory('XMLDataService', function($http){
+/**
+ * FileSystemService to save data onto the phone.
+ * Used to update cache-files.
+ * TODO: update to phonegap file-service.
+ */
+function FileSystemService($http) {
+    var _folder = "data";
+
+    // TODO: change to phonegap filesystem
+    this.getFile = function(filename) {
+        var uri = _folder + "/" + filename;
+        return $http.get(uri);
+    }
+
+    this.saveFile = function(name, data) {
+        // TODO: implement
+    }
+}
+
+/**
+ * Create Service
+ */
+freeradioapp.factory('FileSystemService', function FileSystemServiceFactory($http) {
+    return new FileSystemService($http);
+ });
+
+
+/**
+ * XMLDataService to access remote and local xml-files.
+ * These files will then be transformed into json-objects for use in angular.
+ */
+freeradioapp.factory('XMLDataService', function($log, $q, $http, FileSystemService){
 	var xmlDataService = {};
 
-	xmlDataService.getRemote = function(callback, xmlurl, context){
+	xmlDataService.getRemote = function(xmlurl){
 
         // get remote file
-        $http({
+        return $http({
             method: 'GET',
             /* TODO: CORS problem with accessing remote xmls */
             url: xmlurl,
@@ -46,75 +77,56 @@ freeradioapp.factory('XMLDataService', function($http){
                 var json = x2js.xml_str2json( data );
                 return json;
             }
-        }).
-        success(function(data, status) {
-            // send the converted data back
-            // to the callback function
-            callback(data, context);
-        })
-        .error(function(data, status, headers, config) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
-            callback({status: -1, mode: "remote", input: xmlurl}, context);
         });
     }
 
-    xmlDataService.getLocal = function(callback, filename, context){
-        // get local file
-        $http({
-            method: 'GET',
-            url: "data/" + filename,
-            transformResponse:function(data) {
-                // convert the data to JSON and provide
-                // it to the success function below
-                // IMPORTANT: node name are converted to camelCase for JSON compatiblity!
-                var x2js = new X2JS();
-                var json = x2js.xml_str2json( data );
-                return json;
-            }
-        }).
-        success(function(data, status) {
-            // send the converted data back
-            // to the callback function
-            callback(data, context);
+    xmlDataService.getLocal = function(filename) {
+        var deferred = $q.defer();
+
+        FileSystemService.getFile(filename)
+        .success(function(data) {
+            var x2js = new X2JS();
+            var json = x2js.xml_str2json( data );
+            deferred.resolve(json);
         })
-        .error(function(data, status, headers, config) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
-            callback({status: -1, mode: "local", input: filename}, context);
+        .error(function(e){
+            deferred.reject();
+            $log.warn("XMLDataService: No local file '" + filename + "' found.")
         });
+        return deferred.promise;
     }
 
    return xmlDataService;
 });
 
+
+
 /**
  * DataService functions as a backend data-caching and -updating service.
  */
-function DataService(DeferredWithUpdate, $rootScope, $http, XMLDataService, STATION_EXPIRATION_DAYS, META_EXPIRATION_DAYS) {
-    var _that = this;
-    var _metaDeferred = DeferredWithUpdate.defer();
-    var _metaData = _metaDeferred.promise;
+function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataService, FileSystemService, STATION_EXPIRATION_DAYS, META_EXPIRATION_DAYS, TIME_BETWEEN_UPDATES) {
+    var _that = this;                                   // internal reference on instance, due to JS scopes
+    var _metaDeferred = DeferredWithUpdate.defer();     // deferred object, see: https://docs.angularjs.org/api/ng/service/$q
+    _metaDeferred.resolve({}); // dont know why we need this :(
+    
+    var _metaData = undefined;                          // class-internal storage for data
+    var _metaDataPromise = _metaDeferred.promise;       // external data-promise for update-purposes
+    var _lastMetaDataUpdate;                            // save last update, to prevent infinite loops
 
-    var _stationData = undefined;
-    var _stationDeferred = DeferredWithUpdate.defer();
-    this.stationDataPromise = _stationDeferred.promise;
+    var _stationDeferred = DeferredWithUpdate.defer();  // deferred object, see: https://docs.angularjs.org/api/ng/service/$q
+    _stationDeferred.resolve({}); // dont know why we need this :(
 
-    /**
-     * Empty cache and refresh from XML-Data
-     */
-    var _resetData = function() {
-    }
+    var _stationData = undefined;                       
+    var _stationDataPromise = _stationDeferred.promise;
+    var _lastStationDataUpdate;
 
     /**
      * Set new meta data.
      * This will fire a broadcast.
      */
     var _setMetaData = function(data) {
+        _metaData = data;
         _metaDeferred.resolve(data);
-
-        // Old Verison: with standard $q and event system
-        //$rootScope.$broadcast("metaDataUpdateEvent", _metaData);
     }
 
     /**
@@ -139,32 +151,26 @@ function DataService(DeferredWithUpdate, $rootScope, $http, XMLDataService, STAT
      * Load metadata from local json-file.
      */
     var _getMetaDataFromCache = function() {
-        $http.get('data/meta_cache.json')
-        .success(function(data, status, headers, config){
-            _setMetaData(data.freeradioapp);
-        }, this);
-
-        return( _metaDeferred.promise );
+        FileSystemService.getFile("meta_cache.json")
+        .success(function(response){
+            _setMetaData(response.freeradioapp);
+        })
+        .error(function(e){
+            $log.error("DataService: Local acces of cached meta-file failed: " + e);
+        });
     }
 
     /**
      * Update metadata json-cache from local xml-file
      */
     var _updateMetaCacheLocal = function() {
-        function callback(response){
-            if(response.status === -1) {
-                console.log("<ERROR> local access of 'meta.xml' failed.");
-            }
-            else {
-                // TODO: save into .json-file
-                //_setMetaData(response.freeradioapp);
-                _getMetaDataFromCache();
-            }
-        }
-
-        //TODO: change remote-access url;
-        XMLDataService.getLocal(callback, "meta.xml");
-        return (_metaDeferred.promise);
+        XMLDataService.getLocal("meta.xml")
+        .then(function(response){
+            // TODO: save into .json-file
+            _getMetaDataFromCache();
+        }, function(e){
+            $log.error("DataService: Local access of 'meta.xml' failed: " + e);
+        });
     }
 
     /**
@@ -173,23 +179,20 @@ function DataService(DeferredWithUpdate, $rootScope, $http, XMLDataService, STAT
      */
     var _setStationData = function(data) {
         _stationData = data;
-        _stationDeferred.resolve(_stationData);
-
-        // old version with event-system
-        //$rootScope.$broadcast("stationDataUpdateEvent", _that.stationDataPromise);
+        _stationDeferred.resolve(data);
     }
 
     /**
      * Check if stationdata of given station is expired.
      */
     var _isStationDataExpired = function(id) {
-        if(_stationData == undefined)
+        if(!_stationData || !_stationData.stations[id])
             return true;
 
-        var stationLastUpdated = new Date(_stationData.stations.station[id]._lastupdate);
+        var stationLastUpdated = new Date(_stationData.stations[id].station._lastupdate);
         var now = Date.now();
 
-        if(Math.round(Math.abs((now.getTime() - stationLastUpdated.getTime())/(72000000))) > STATION_EXPIRATION_DAYS) {
+        if(Math.round(Math.abs((now - stationLastUpdated)/(72000000))) > STATION_EXPIRATION_DAYS) {
             return true;
         }
         else {
@@ -201,9 +204,12 @@ function DataService(DeferredWithUpdate, $rootScope, $http, XMLDataService, STAT
      * Load stationdata from local json-cache
      */
     var _getStationDataFromCache = function() {
-        $http.get('data/stations_cache.json')
-        .success(function(data, status, headers, config){
-            _setStationData(data);
+        FileSystemService.getFile("stations_cache.json")
+        .success(function(response){
+            _setStationData(response);
+        })
+        .error(function(e){
+            $log.error("DataService: Access of cached station-file failed: " + e);
         });
     }
 
@@ -216,21 +222,14 @@ function DataService(DeferredWithUpdate, $rootScope, $http, XMLDataService, STAT
             return;
         }
 
-        function callback(response){
-            if(response.status == -1) {
-                if(response.mode == "local") {
-                    console.log("<ERROR> local access of '"+respone.xmlurl+"' failed.")
-                } else {
-                    console.log("<ERROR> remote access of '"+respone.xmlurl+"' failed.")
-                }
-            }
-            else {
-                // TODO: save into .json-file
-            }
-        }
-
         angular.forEach(_that.getStationData().stations, function(value, key) {
-            XMLDataService.getLocal(callback, value.station.info.fullname.hashCode()+".xml");
+            XMLDataService.getLocal(value.station.info.fullname.hashCode()+".xml")
+            .then(function(response) {
+                // TODO: save into .json-file
+                //DataService.saveFile("stations_cache.json", response);
+            }, function(e) {
+                $log.error("DataService: Local access of local station-xml failed: " + e);
+            });
         }, _that);
     }
 
@@ -242,27 +241,30 @@ function DataService(DeferredWithUpdate, $rootScope, $http, XMLDataService, STAT
      * Returns metadata-promise
      */
     this.getMetaData = function() {
-        return _metaData;
+        return _metaDataPromise;
     }
 
     /**
-     * Updates metacache from remote xml-file
+     * Updates metacache from remote xml-file expired.
+     * forceRefresh: if true will refresh even if not neede
      */
-    this.updateMetaCache = function() {
-        function callback(response){
-            if(response.status === -1) {
-                console.log("<ERROR> remote access of '"+ response.xmlurl +"' failed.");
-            }
-            else {
-                // TODO: save into .json cache-file
-                _setMetaData(response.freeradioapp);
-            }
-        }
+    this.updateMetaData = function(forceRefresh) {
+        if(!forceRefresh && !_isMetaDataExpired)
+            return;
+
+        if((Date.now() - _lastMetaDataUpdate) < TIME_BETWEEN_UPDATES)
+            return;
+
+        _lastMetaDataUpdate = Date.now();
 
         //TODO: change remote-access url;
-        XMLDataService.getRemote(callback, "data/meta-demo.xml");
-        //_metaData = _metaDeferred.promise;
-        return( _metaDeferred.promise );
+        XMLDataService.getRemote("data/meta-demo.xml")
+        .success(function(response){
+            _setMetaData(response.freeradioapp);
+        })
+        .error(function(e){
+            $log.error("DataService: Remote access of meta.xml failed:" + e);
+        });
     }
 
 
@@ -270,44 +272,81 @@ function DataService(DeferredWithUpdate, $rootScope, $http, XMLDataService, STAT
      * Returns current station data.
      */
     this.getStationData = function() {
-        return _stationData;
+        return _stationDataPromise;
     }
     
     /**
-     * Updates stationscache from remote xml-files
+     * Updates stationscache from remote xml-files if expired.
+     * forceRefresh: if true will refresh even if not needed.
      */
-    this.updateStationCache = function() {
-        if(this.getMetaData() == undefined) {
-            this.updateMetaData();
+    this.updateStationData = function(forceRefresh) {
+        $log.log("trying to update stationData: " + ((Date.now() - _lastStationDataUpdate) < TIME_BETWEEN_UPDATES));
+        var promises = [];
+
+        if(!_metaData || (Date.now() - _lastStationDataUpdate) < TIME_BETWEEN_UPDATES)
             return;
-        }
+        
+        _lastStationDataUpdate = Date.now();
 
-        function callback(response){
-            if(response.status == -1) {
-                console.log("<ERROR> local access of '"+ response.xmlurl +"'' failed.")
+        angular.forEach(_metaData.stationlist.station, function(value, key) {
+            // only update if needed or forced
+            if(forceRefresh || _isStationDataExpired(value._id)) {
+                promises.push(XMLDataService.getRemote(value.xmluri));
             }
-            else {
-                // TODO: save into .json cache-file
-            }
-        }
+        });
 
-        angular.forEach(this.getStationData().stationlist.station, function(value, key) {
-            XMLDataService.getRemote(callback, value.xmlurl);
-        }, this);
+        $q.all(promises)
+        .then(function(responses) {
+            //TODO: update chache
+        }, function(e){
+            $log.warn(e);
+        });
     }
 
-    // Get data from cache
+    // init with cache data
     _getMetaDataFromCache();
     _getStationDataFromCache();
-
-    // TODO: Check for last-updated and update if neccesary
-    //$timeout(_updateStationCacheLocal, 1000);
-    this.updateMetaCache();
 }
 
 /**
  * Create Service
  */
-freeradioapp.factory('DataService', function DataStorageFactory(DeferredWithUpdate, $rootScope, $http, XMLDataService) {
-    return new DataService(DeferredWithUpdate, $rootScope, $http, XMLDataService);
+freeradioapp.factory('DataService', function DataStorageFactory(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataService, FileSystemService) {
+    return new DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataService, FileSystemService);
+ });
+
+
+
+/**
+ * FavoriteService to save and load favorites.
+ */
+function FavoriteService($http, $q, FileSystemService) {
+    var _data = undefined;
+
+    this.loadFavorites = function() {
+        var deferred = $q.defer();
+        FileSystemService.getFile("userdata.json").success(function(data){
+            deferred.resolve(data);
+            //console.table($scope.favorites);
+        })
+        .error(function(e){
+            deferred.reject(e);
+        })
+        return deferred.promise;
+    }
+
+    this.addFavorite = function(data) {
+        // TODO: implement
+    }
+
+    this.removeFavorite = function(name, data) {
+        // TODO: implement
+    }
+}
+
+/**
+ * Create Service
+ */
+freeradioapp.factory('FavoriteService', function FavoriteServiceFactory($http, $q, FileSystemService) {
+    return new FavoriteService($http, $q, FileSystemService);
  });

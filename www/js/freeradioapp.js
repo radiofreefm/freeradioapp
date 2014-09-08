@@ -13,6 +13,7 @@
 var freeradioapp = angular.module('FreeRadioApp', ["DeferredWithUpdate"]);
 freeradioapp.constant('META_EXPIRATION_DAYS', 30);
 freeradioapp.constant('STATION_EXPIRATION_DAYS', 7);
+freeradioapp.constant('TIME_BETWEEN_UPDATES', 6000); // in ms
 
 
 /******************************
@@ -28,9 +29,13 @@ freeradioapp.constant('STATION_EXPIRATION_DAYS', 7);
  ******************************/
 $(document).ready(function(){
 
+    console.log("Initialising jQuery.mobile components.")
     /* jQuery Mobile External Inits */
     //$("body>[data-role='header']").toolbar();
     $("body>[data-role='popup']").popup();
+
+    // Init all lists, because they are dynamically created via angular.
+    $("[data-role='listview']").listview().listview('refresh');
 });
 
 

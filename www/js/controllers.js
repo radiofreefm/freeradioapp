@@ -12,20 +12,30 @@
 freeradioapp.controller('AppController', function ($http, $scope, $rootScope, SharedStationService, DataService) {
     // at first, load data from cache
     $rootScope.metaData = DataService.getMetaData();
-    $rootScope.stationData = {};
+    $rootScope.stationData = DataService.getStationData();
+
+    DataService.updateMetaData();
 
     /**
-     * Updating metadata if new cache-data
+     * Updating data if new cache-data
      */
-    function updateMetaData(data) {
+    $rootScope.metaData.update(function(data){
         $rootScope.metaData = data;
         console.log("MetaData updated");
         console.log(data);
-    }
 
-    // update scope-data when new data is available
-    $rootScope.metaData.update(function(data){
-        updateMetaData(data);
+        // refresh jQuery.mobile component styling
+        $("[data-role='listview']").listview().listview('refresh');
+        DataService.updateStationData();
+    });
+
+    $rootScope.stationData.update(function(data){
+        $rootScope.stationData = data;
+        console.log("StationData updated");
+        console.log(data);
+
+        // refresh jQuery.mobile component styling
+        $("[data-role='listview']").listview().listview('refresh');
     });
 
     // Old version with event-system and standard $q - not working with multiple updates
@@ -50,17 +60,21 @@ freeradioapp.controller('AppController', function ($http, $scope, $rootScope, Sh
     /**
      * Updating station if new cache-data
      */
+    
+
+    // Old version with event-system and standard $q - not working with multiple updates
+    /*
     function updateStationData(data) {
         $rootScope.stationData = data;
         console.log("StationData updated");
         console.log(data);
     }
 
-    /*DataService.stationDataPromise.then(function(newStationData) {
+    DataService.stationDataPromise.then(function(newStationData) {
         updateStationData(newStationData);
     }, function(error) {
         //TODO: ErrorHandling
-    });*/
+    });
 
     // global broadcast - stationdata was updated
     $rootScope.$on('stationDataUpdateEvent', function(ev, newStationDataPromise) {
@@ -70,7 +84,7 @@ freeradioapp.controller('AppController', function ($http, $scope, $rootScope, Sh
             //TODO: ErrorHandling
             console.log("<ERROR> stationDataUpdateEvent failed due to " + error);
         });
-    });
+    });*/
 
     /**
      * Handle Stationselects
@@ -84,11 +98,27 @@ freeradioapp.controller('AppController', function ($http, $scope, $rootScope, Sh
 /**
  * Controller for fetching station.xml data
  */
-freeradioapp.controller('StationDetailController', function ($scope, $rootScope, SharedStationService) {
+freeradioapp.controller('StationDetailController', function ($log, $scope, $rootScope, SharedStationService, XMLDataService) {
+    $scope.noData = true;
 
     // remote data
     updateStationData = function(message) {
-        $scope.selectedStationData = $rootScope.stationData.stations[message.id].station;
+        if($rootScope.stationData.stations[message.id] === undefined) {
+            // TODO: errorhandling in case of missing data!
+            $log.warn("StationDetailController: No cached station data found for '" + message.name +"'.")
+            XMLDataService.getLocal(message.name.hashCode()+".xml")
+            .then(function(data){
+                $scope.selectedStationData = data;
+                $scope.noData = false;
+            }, function(e){
+                $log.error("StationDetailController: No local station.xml found for '" + message.name + "'.");
+                $scope.noData = true;
+            });
+        }
+        else {
+            $scope.selectedStationData = $rootScope.stationData.stations[message.id].station;
+            $scope.noData = false;
+        }
     }
 
     // global broadcast - station was selected
@@ -100,15 +130,33 @@ freeradioapp.controller('StationDetailController', function ($scope, $rootScope,
 /**
  * Saving and loading favorites
  */
-freeradioapp.controller('FavoriteController', function ($scope) {
+freeradioapp.controller('FavoriteController', function ($log, $scope, FavoriteService) {
 	//TODO
+    $scope.favorites = FavoriteService.loadFavorites();
+    $scope.noData = true;
+    
+    $scope.favorites.then(function(data){
+        $scope.favorites= data.freeradioapp;
+        $scope.noData = false;
+        console.log(data);
+    }, function(e){
+        $log.warn("FavoriteController: no favorites for user.")
+        $scope.noData = true;
+    })
+
 });
 
 
 /**
- * TBD
+ * Searching through the avaiblable stations and broadcasts.
+ * All done in HTML via decorators.
  */
 freeradioapp.controller('SearchController', function ($rootScope, $scope, $http, DataService) {
-    //TODO
-    $scope.searchTerm = {};
+    $scope.$watch('searchTerm', function(){ 
+        // refresh jQuery.mobile styles on list-items
+        $('#searchList ul').listview().listview('refresh');
+    });
+
+    // order by:
+    $scope.orderProp = "name";
 });

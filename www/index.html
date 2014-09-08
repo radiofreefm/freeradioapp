@@ -116,65 +116,71 @@
 	</div>
 	<!-- Content -->
 	<div id="detail-content" class="ui-content" data-role="main">
-		<div id="detail-tabs" class="navigation-tabs" data-role="tabs">
-			<!-- navbar -->
-			<div data-role="navbar">
-				<ul>
-					<li><a href="#tab-detail-info" data-theme="a" class="ui-btn-active" data-ajax="false">Info</a></li>
-					<li><a href="#tab-detail-program" data-theme="a" data-ajax="false">Programm</a></li>
-					<li><a href="#tab-detail-contact" data-theme="a" data-ajax="false">Kontakt</a></li>
-				</ul>
-			</div>
-			<!-- /END navbar -->
+		<span ng-if="noData" class="error">Fehler! Keine Senderdaten gefunden.</span>
+		<div ng-if="!noData">
+			<div id="detail-tabs" class="navigation-tabs" data-role="tabs">
+				<!-- navbar -->
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#tab-detail-info" data-theme="a" class="ui-btn-active" data-ajax="false">Info</a></li>
+						<li><a href="#tab-detail-program" data-theme="a" data-ajax="false">Programm</a></li>
+						<li><a href="#tab-detail-contact" data-theme="a" data-ajax="false">Kontakt</a></li>
+					</ul>
+				</div>
+				<!-- /END navbar -->
 
-			
-	        <!-- Tab:Info -->
-			<div id="tab-detail-info" class="ui-content">
-				<div class="ui-grid-a">
-					<div class="ui-block-a"><img ng-src="{{selectedStationData.station.info.logo._src}}"/></div>
-					<div class="ui-block-b">
-						{{selectedStationData.info.city}}<br/>
-						{{selectedStationData.mediaChannels.transmitter.frequency}} {{selectedStationData.mediaChannels.transmitter.frequencyunit}}
+				
+		        <!-- Tab:Info -->
+				<div id="tab-detail-info" class="ui-content">
+					<div class="ui-grid-a">
+						<div class="ui-block-a"><img ng-src="{{selectedStationData.station.info.logo._src}}"/></div>
+						<div class="ui-block-b">
+							{{selectedStationData.info.city}}<br/>
+							{{selectedStationData.mediaChannels.transmitter.frequency}} {{selectedStationData.mediaChannels.transmitter.frequencyunit}}
+						</div>
+					</div>
+					<div class="ui-body ui-body-a ui-corner-all">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 					</div>
 				</div>
-				<div class="ui-body ui-body-a ui-corner-all">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<!-- /END Tab:Info -->
+			    
+			    <!-- Tab:Programm -->
+				<div id="tab-detail-program" class="ui-content">
+					<ul data-role="listview" data-inset="true">
+						<li ng-repeat="broadcast in selectedStationData.programme">
+							<h4>{{broadcast.title}}</h4>
+						</li>
+					</ul>
 				</div>
-			</div>
-			<!-- /END Tab:Info -->
-		    
-		    <!-- Tab:Programm -->
-			<div id="tab-detail-program" class="ui-content">
-				<!-- <div ng-repeat="">
-				</div> -->
-			</div>
-			<!-- /END Tab:Programm -->
+				<!-- /END Tab:Programm -->
 
-			<!-- Tab:Kontakt -->
-			<div id="tab-detail-contact" class="ui-content">
-				<div class="ui-body ui-body-a ui-corner-all">
-					<h4>B&uuml;ro und Studio</h4>
-					{{selectedStationData.info.fullname}}<br/>
-					{{selectedStationData.info.studio.street}} {{selectedStationData.info.studio.number}}<br/>
-					{{selectedStationData.info.studio.zip}} {{selectedStationData.info.studio.city}}<br/>
-				</div>
-				<div class="ui-body ui-body-a ui-corner-all">
-					<h4>&Ouml;ffnungszeiten</h4>
-					werktags {{selectedStationData.info.studio.open["_time-from"]}} - {{selectedStationData.info.studio.open["_time-to"]}}
-				</div>
-				<div class="ui-body ui-body-a ui-corner-all">
-					<h4>Telefon</h4>
-					<div ng-repeat="phone in selectedStationData.info.studio.phone">
-						{{phone._type}} : {{phone.__text}}
+				<!-- Tab:Kontakt -->
+				<div id="tab-detail-contact" class="ui-content">
+					<div class="ui-body ui-body-a ui-corner-all">
+						<h4>B&uuml;ro und Studio</h4>
+						{{selectedStationData.info.fullname}}<br/>
+						{{selectedStationData.info.studio.street}} {{selectedStationData.info.studio.number}}<br/>
+						{{selectedStationData.info.studio.zip}} {{selectedStationData.info.studio.city}}<br/>
+					</div>
+					<div class="ui-body ui-body-a ui-corner-all">
+						<h4>&Ouml;ffnungszeiten</h4>
+						werktags {{selectedStationData.info.studio.open._timeFrom}} - {{selectedStationData.info.studio.open._timeTo}}
+					</div>
+					<div class="ui-body ui-body-a ui-corner-all">
+						<h4>Telefon</h4>
+						<div ng-repeat="phone in selectedStationData.info.studio.phone">
+							{{phone._type}} : {{phone.__text}}
+						</div>
 					</div>
 				</div>
+				<!-- /END Tab:Kontakt -->
 			</div>
-			<!-- /END Tab:Kontakt -->
 		</div>
     </div>
 	<!-- /END Content -->
@@ -185,17 +191,16 @@
 <!-- Page:Suche -->
 <div data-role="page" id="page-search" data-theme="a" ng-controller="SearchController">
 	<div id="head" data-theme="a" data-role="header" data-position="fixed">
-	    <h3>Search</h3>
+	    <h3>Suche</h3>
 	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
 	</div>
-	<div data-role="content">
+	<div id="searchList" data-role="content">
 		<form>
-		     <label for="search-1">Suche:</label>
-		     <input type="search" name="search-1" id="search-1" value="" ng-model="searchTerm">
+		     <input type="text" name="search-1" id="search-1" value="" ng-model="searchTerm">
 		</form>
 		<ul data-role="listview" data-inset="true">
 			<li data-role="list-divider">Sender</li>
-		    <li ng-repeat="station in searchData.stations  | filter:searchTerm">
+		    <li ng-repeat="station in metaData.stationlist.station | filter:searchTerm | orderBy:orderProp">
 		    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id, station.name)">
 		    		<h3>{{station.name}}</h3>
 		    		<p>{{station.city}} | {{station.frequency}} MHz</p>
@@ -205,8 +210,8 @@
 
 		<ul data-role="listview" data-inset="true">
 			<li data-role="list-divider">Sendung</li>
-		    <li ng-repeat="broadcast in searchData.broadcasts  | filter:searchTerm">
-		    	<a href="#">{{broadcast.name}}</a>
+		    <li ng-repeat="broadcast in stationData.stations | filter:searchTerm | orderBy:orderProp">
+		    	<a href="#">{{broadcast.station.programme.broadcast.title}}</a>
 		    </li>
 		</ul>
 	</div>
@@ -214,18 +219,31 @@
 <!-- /END Page:Suche -->
 
 <!-- Page:Favoriten -->
-<div data-role="page" id="page-favorites" data-theme="a">
+<div data-role="page" id="page-favorites" data-theme="a" ng-controller="FavoriteController">
 	<div id="head" data-theme="a" data-role="header" data-position="fixed">
 	    <h3>Favorites</h3>
 	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
 	</div>
 	<div data-role="content">
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<span ng-if="noData" class="info">Sie haben noch keine Favoriten gespeichert.</span>
+		<div ng-if="!noData">
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider">Sender</li>
+			    <li ng-repeat="station in favorites.favorites.stations">
+			    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id, station.name)">
+			    		<h3>{{station.name}}</h3>
+			    		<p>{{metaData.stationslist.station[station._id].station.city}} | {{metaData.stationslist.station[station._id].station.frequency}} MHz</p>
+			    	</a>
+			    </li>
+			</ul>
+
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider">Sendung</li>
+			    <li ng-repeat="broadcast in favorites.favorites.broadcasts">
+			    	<a href="#">{{broadcast.name}}</a>
+			    </li>
+			</ul>
+		</div>
 	</div>
 </div>
 <!-- /END Page:Favoriten -->
