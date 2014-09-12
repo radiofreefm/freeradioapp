@@ -7,8 +7,6 @@
         id        = "com.phonegap.freeradioapp"
         version   = "0.4.0">
 
-    <preference name="phonegap-version" value="3.5.0" />
-
     <name>Freie Radios</name>
 
     <description>
@@ -18,4 +16,16 @@
     <author href="http://www.freefm.de/taxonomy/term/4270" email="florian.geiselhart@uni-ulm.de">
         fg
     </author>
+
+    <!-- PhoneGap -->
+    <preference name="phonegap-version" value="3.5.0" />
+
+    <!-- iOS -->
+    <preference name="orientation" value="portrait" />
+    <preference name="target-device" value="handset" />
+
+    <!--
+      This allows your app to load assets from all domains
+    -->
+    <access origin="*" subdomains="true" />
 </widget>
