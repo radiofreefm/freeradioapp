@@ -14,8 +14,6 @@ freeradioapp.controller('AppController', function ($http, $scope, $rootScope, Sh
     $rootScope.metaData = DataService.getMetaData();
     $rootScope.stationData = DataService.getStationData();
 
-    DataService.updateMetaData();
-
     /**
      * Updating data if new cache-data
      */
@@ -26,7 +24,6 @@ freeradioapp.controller('AppController', function ($http, $scope, $rootScope, Sh
 
         // refresh jQuery.mobile component styling
         $("[data-role='listview']").listview().listview('refresh');
-        DataService.updateStationData();
     });
 
     $rootScope.stationData.update(function(data){
@@ -151,7 +148,7 @@ freeradioapp.controller('FavoriteController', function ($log, $scope, FavoriteSe
  * Searching through the avaiblable stations and broadcasts.
  * All done in HTML via decorators.
  */
-freeradioapp.controller('SearchController', function ($rootScope, $scope, $http, DataService) {
+freeradioapp.controller('SearchController', function ($rootScope, $scope) {
     $scope.$watch('searchTerm', function(){ 
         // refresh jQuery.mobile styles on list-items
         $('#searchList ul').listview().listview('refresh');
@@ -159,4 +156,41 @@ freeradioapp.controller('SearchController', function ($rootScope, $scope, $http,
 
     // order by:
     $scope.orderProp = "name";
+});
+
+/**
+ * Broadcasting schedule
+ */
+freeradioapp.controller('ScheduleController', function ($rootScope, $scope, $timeout, BROADCAST_CATEGORIES) {
+    $scope.$evalAsync(function(scope){
+        $timeout(function(){
+            // TODO: do
+        });
+    });
+
+    $scope.categories = BROADCAST_CATEGORIES;
+    angular.forEach($scope.categories, function(value, key){
+        value["_checked"] = false;
+    });
+
+    $scope.timeframes = [
+
+    ];
+
+    $scope.toggleSelection = function(id){
+        console.table($scope.categories);
+    }
+
+    $scope.isIncluded = function(broadcast){
+        debugger;
+        angular.forEach($scope.categories, function(value, key) {
+            if(value._checked) {
+                angular.forEach(broadcast.categories, function(value, key){
+
+                });
+            }
+        });
+
+        return true;
+    }
 });

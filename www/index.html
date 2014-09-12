@@ -68,7 +68,7 @@
 		    <li><a href="#page-favorites">Favoriten</a></li>
 		    <li><a href="#page-info">Info</a></li>
 		    <li><a href="#">Ortung</a></li>
-		    <li><a href="#">Sendeplan</a></li>
+		    <li><a href="#page-schedule">Sendeplan</a></li>
 		</ul>
 	<!--  OLD
 		<br>
@@ -247,6 +247,47 @@
 	</div>
 </div>
 <!-- /END Page:Favoriten -->
+
+<!-- Page:Sendeplan -->
+<div data-role="page" id="page-schedule" data-theme="a" ng-controller="ScheduleController">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3>Sendeplan</h3>
+	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+	</div>
+	<div data-role="content">
+		<span ng-if="noData" class="error">Fehler! Es konnten keine Sendungen geladen werden.</span>
+		<div ng-if="!noData">
+			<form id="schedule-filters" name="filterCategories" method="post">
+				<!-- <fieldset data-role="controlgroup" data-type="horizontal" jquery-mobile-tpl>
+		 			<input ng-repeat-start="category in categories" type='checkbox' ng-model='categories[category._id]' name="category-{{category._id}}" id="category-{{category._id}}"/>
+		 			<label for="category-{{category._id}}" ng-repeat-end>{{category._name}}</label>
+				</fieldset> -->
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<input type="checkbox" name="category-0" id="category-0" ng-click="toggleSelection(0)" ng-checked="categories[0]._checked">
+			        <label for="category-0">Alternative</label>
+			        <input type="checkbox" name="category-1" id="category-1" ng-click="toggleSelection(1)" ng-checked="categories[1]._checked">
+			        <label for="category-1">Ambient</label>
+			        <input type="checkbox" name="category-2" id="category-2" ng-click="toggleSelection(2)" ng-checked="categories[2]._checked">
+			        <label for="category-2">Classical</label>
+			        <input type="checkbox" name="category-3" id="category-3" ng-click="toggleSelection(3)" ng-checked="categories[3]._checked">
+			        <label for="category-3">Country</label>
+			        <input type="checkbox" name="category-4" id="category-4" ng-click="toggleSelection(4)" ng-checked="categories[4]._checked">
+			        <label for="category-4">Dance</label>
+			        <input type="checkbox" name="category-5" id="category-5" ng-click="toggleSelection(5)" ng-checked="categories[5]._checked">
+			        <label for="category-5">Depp House</label>
+			        <input type="checkbox" name="category-6" id="category-6" ng-click="toggleSelection(6)" ng-checked="categories[6]._checked">
+			        <label for="category-6">Disco</label>
+			    </fieldset>
+			</form>
+			<ul data-role="listview" data-inset="true">
+		    	<li ng-repeat="broadcast in stationData.stations | filter:{included:true} | orderBy:orderProp">
+		    		<a href="#">{{broadcast.station.programme.broadcast.title}}</a>
+		    	</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- /END Page:Sendeplan -->
 
  <!-- Page:Info -->
 <div data-role="page" id="page-info" data-theme="a">

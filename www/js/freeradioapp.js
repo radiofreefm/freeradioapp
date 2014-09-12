@@ -5,7 +5,7 @@
  * Scripts for the App
  */
 
-
+'use strict';
 
 /******************************
  *  Angular                   *
@@ -14,13 +14,30 @@ var freeradioapp = angular.module('FreeRadioApp', ["DeferredWithUpdate"]);
 freeradioapp.constant('META_EXPIRATION_DAYS', 30);
 freeradioapp.constant('STATION_EXPIRATION_DAYS', 7);
 freeradioapp.constant('TIME_BETWEEN_UPDATES', 6000); // in ms
+freeradioapp.constant('BROADCAST_CATEGORIES',
+   [{ _id: 0, _name: "Alternative"},
+    { _id: 1, _name: "Ambient"},
+    { _id: 2, _name: "Classical"},
+    { _id: 3, _name: "Country"},
+    { _id: 4, _name: "Dance"},
+    { _id: 5, _name: "Depp House"},
+    { _id: 6, _name: "Disco"}
+]); // INFO: edit categories here pls
 
+freeradioapp.directive('jqueryMobileTpl', function() {
+  return {
+    link: function(scope, elm, attr) {
+      elm.trigger('create');
+      console.log("jquery create");
+    }
+  };
+});
 
 /******************************
  *  HELPER                    *
  ******************************/
- String.prototype.hashCode = function() {
-  return this.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
+String.prototype.hashCode = function() {
+    return this.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
 };
 
 
@@ -34,8 +51,9 @@ $(document).ready(function(){
     //$("body>[data-role='header']").toolbar();
     $("body>[data-role='popup']").popup();
 
-    // Init all lists, because they are dynamically created via angular.
+    // Init all items dynamically created via angular.
     $("[data-role='listview']").listview().listview('refresh');
+    //$("input[type='checkbox'").checkboxradio().checkboxradio( "refresh" );
 });
 
 
