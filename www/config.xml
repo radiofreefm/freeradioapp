@@ -25,6 +25,9 @@
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="handset" />
 
+    <!-- Android -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <!-- Plugins -->
     <gap:plugin name="org.apache.cordova.file" version="1.0.1" />
