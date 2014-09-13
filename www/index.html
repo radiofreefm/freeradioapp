@@ -281,7 +281,7 @@
 			    </fieldset>
 			</form>
 			<ul data-role="listview" data-inset="true">
-		    	<li ng-repeat="broadcast in stationData.stations | filter:{included:true} | orderBy:orderProp">
+		    	<li ng-repeat="broadcast in stationData.stations | categoryFilter:this | orderBy:orderProp">
 		    		<a href="#">{{broadcast.station.programme.broadcast.title}}</a>
 		    	</li>
 			</ul>

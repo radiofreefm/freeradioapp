@@ -1,6 +1,6 @@
 {
-    "stations": [
-        {
+    "stations": {
+        "Radio StH\u00f6rfunk": {
             "station": {
                 "_lastupdate": "2013-08-21T15:07:38.6875000+02:00",
                 "_xmlns:gml": "http://www.opengis.net/gml",
@@ -190,5 +190,5 @@
                 }
             }
         }
-    ]
+    }
 }

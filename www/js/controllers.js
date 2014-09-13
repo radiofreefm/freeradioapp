@@ -102,20 +102,20 @@ freeradioapp.controller('StationDetailController', function ($log, $scope, $root
 
     // remote data
     updateStationData = function(message) {
-        if($rootScope.stationData.stations[message.id] === undefined) {
+        if($rootScope.stationData.stations[message.name] === undefined) {
             // TODO: errorhandling in case of missing data!
             $log.warn("StationDetailController: No cached station data found for '" + message.name +"'.")
-            XMLDataService.getLocal(message.name.hashCode()+".xml")
+            /*XMLDataService.getLocal(message.name.hashCode()+".xml")
             .then(function(data){
                 $scope.selectedStationData = data;
                 $scope.noData = false;
             }, function(e){
                 $log.error("StationDetailController: No local station.xml found for '" + message.name + "'.");
                 $scope.noData = true;
-            });
+            });*/
         }
         else {
-            $scope.selectedStationData = $rootScope.stationData.stations[message.id].station;
+            $scope.selectedStationData = $rootScope.stationData.stations[message.name].station;
             $scope.noData = false;
         }
     }
@@ -163,6 +163,26 @@ freeradioapp.controller('SearchController', function ($rootScope, $scope) {
     $scope.orderProp = "name";
 });
 
+
+/**
+ * Custom category filter for Sendeplan
+ * TODO: implement for more then one broadcast!
+ */
+angular.module("FreeRadioApp.filters", []).filter("categoryFilter", function() {
+    return function(input, scope) {
+        var result = {};
+        var _scope = scope;
+        angular.forEach(input, function(station){
+            //console.table(station.station.programme.broadcast.categories.category);
+            //console.table(_scope.categories);
+
+            // TODO: filter here
+            result[station.station.info.fullname] = station;
+        });
+        return result;
+    };
+});
+
 /**
  * Broadcasting schedule
  */
@@ -183,18 +203,17 @@ freeradioapp.controller('ScheduleController', function ($rootScope, $scope, $tim
     ];
 
     $scope.toggleSelection = function(id){
-        console.table($scope.categories);
+        $scope.categories[id]._checked = !$scope.categories[id]._checked;
     }
-
-    $scope.isIncluded = function(broadcast){
+/*
+    $scope.categoryFilter = function(broadcast){
+        debugger;
         angular.forEach($scope.categories, function(value, key) {
             if(value._checked) {
-                angular.forEach(broadcast.categories, function(value, key){
 
-                });
             }
         });
 
         return true;
-    }
+    }*/
 });

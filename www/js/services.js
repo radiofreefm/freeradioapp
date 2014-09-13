@@ -297,7 +297,7 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
     var _stationDeferred = DeferredWithUpdate.defer();  // deferred object, see: https://docs.angularjs.org/api/ng/service/$q
     _stationDeferred.resolve({}); // dont know why we need this :(
 
-    var _stationData = {};                       
+    var _stationData = {stations:{}};                       
     var _stationDataPromise = _stationDeferred.promise;
     var _lastStationDataUpdate;
 
@@ -333,8 +333,8 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
      */
     var _getMetaDataFromCache = function() {
         function callback(result){
-            var data = JSON.parse(result.data);
-            _setMetaData(data.freeradioapp);
+            //var data = JSON.parse(result.data);
+            _setMetaData(result.data.freeradioapp);
         }
 
         CacheService.getFile("meta_cache.json", callback);
@@ -358,11 +358,11 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
             //     _getMetaDataFromCache();
             // });
             function callback(result){
-                var data = JSON.parse(result.data);
-                _setMetaData(data.freeradioapp);
+                //var data = JSON.parse(result.data);
+                _setMetaData(result.data.freeradioapp);
             }
 
-            CacheService.saveFile("meta_cache.json", JSON.stringify(response), callback);
+            CacheService.saveFile("meta_cache.json", response, callback);
         })
         .error(function(e){
             $log.error("DataService: Local access of 'meta.xml' failed: " + e);
@@ -408,8 +408,8 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
         // });
 
         function callback(result){
-            var data = JSON.parse(result.data);
-            _setMetaData(data.freeradioapp);
+            //var data = JSON.parse(result.data);
+            _setMetaData(result);
         }
 
         CacheService.getFile("stations_cache.json", callback);
@@ -424,16 +424,28 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
             return;
         }
 
-        angular.forEach(_that.getStationData().stations, function(value, key) {
-            XMLDataService.getLocal(value.station.info.fullname.hashCode()+".xml")
+        var data = _stationData;
+        var promises = [];
+
+        angular.forEach(_metaData.stationlist.station, function(value, key) {
+            promises.push(XMLDataService.getLocal(value.name.hashCode()+".xml")
             .success(function(response) {
-                // TODO: save into .json-file
+                data.stations[response.station.info.fullname] = response;
                 //DataService.saveFile("stations_cache.json", response);
             })
             .error(function(e) {
                 $log.error("DataService: Local access of local station-xml failed: " + e);
-            });
+            }));
         }, _that);
+
+        $q.all(promises)['finally'](function(responses){
+            function callback(result){
+                //var data = JSON.parse(result.data);
+                _setStationData(result.data);
+            }
+
+            CacheService.saveFile("stations_cache.json", data, callback);
+        });
     }
 
     /*
@@ -502,12 +514,13 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
             }
         });
 
-        $q.all(promises)
-        .success(function(responses) {
-            //TODO: update chache
-        })
-        .error(function(e){
-            $log.warn(e);
+        $q.all(promises)['finally'](function(responses){
+            function callback(result){
+                //var data = JSON.parse(result.data);
+                _setStationData(result.data);
+            }
+
+            CacheService.saveFile("stations_cache.json", data, callback);
         });
     }
 
@@ -515,14 +528,16 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
         // init with cache data
         CacheService.fileExists('meta_cache.json', function(exists){
             if(!exists) {
-                $log.log('DataService: no cache data found, loading from local xmls.');
+                $log.log('DataService: no meta cache data found, loading from local xmls.');
                 _updateMetaCacheLocal();
             }
             else {
-                $log.log('DataService: cache data found.')
+                $log.log('DataService: cache meta data found.')
                 _getMetaDataFromCache();
             }
         });
+
+        setTimeout(_updateStationCacheLocal, 500);
     }
 
     
@@ -553,7 +568,7 @@ function FavoriteService($http, $q, FileSystemService, CacheService, DeferredWit
             if(!exists) {
                 CacheService.saveFile(
                     'favorites.json',
-                    '{"_lastupdate": "2013-08-21T15:07:38.6875000+02:00", "stations": [{"_id": "0","name": "Radio StHörfunk"},{"_id": "1","name": "Free FM"}],"broadcasts": [{"_stationid": "0","name": "Testsendung"}]}',
+                    {"_lastupdate": "2013-08-21T15:07:38.6875000+02:00", "stations": [{"_id": "0","name": "Radio StHörfunk"},{"_id": "1","name": "Free FM"}],"broadcasts": [{"_stationid": "0","name": "Testsendung"}]},
                     function(){
                         _loadFavorites();
                     }
@@ -584,9 +599,9 @@ function FavoriteService($http, $q, FileSystemService, CacheService, DeferredWit
             setTimeout(_that.loadFavorites, 1000);
         }*/
 
-        CacheService.getFile('favorites.json', function (results){
-            var data = JSON.parse(results.data);
-            _setFavorites(data);
+        CacheService.getFile('favorites.json', function (result){
+            //var data = JSON.parse(results.data);
+            _setFavorites(result.data);
         });
     }
 
