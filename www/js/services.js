@@ -35,8 +35,17 @@ function CacheService() {
         _that.isInitalized = true;
     });
 
+    /**
+     * Delete local cache
+     */
     this.reset = function(){
-        _store.nuke();
+        // currently bugged!
+        //_store.nuke();
+
+        // hardcoded fix
+        _store.remove('meta_cache.json');
+        _store.remove('stations_cache.json');
+        _store.remove('favorites.json');
     }
 
     /**
@@ -54,7 +63,7 @@ function CacheService() {
     }
 
     /**
-     * Save data into file (and create that if necessary).
+     * Save data into file (and create file if necessary).
      */
     this.saveFile = function(filename, data, callback) {
         _store.save({key:filename, data:data}, callback);
@@ -71,7 +80,7 @@ freeradioapp.factory('CacheService', function CacheServiceFactory() {
 
 /**
  * FileSystemService to save and load persistent data from the phone.
- * NOT USED, because complicated!
+ * INFO: not used, because complicated!
  */
 function FileSystemService($http, $q, $log) {
     var _directory = LocalFileSystem.PERSISTENT;
@@ -237,7 +246,7 @@ freeradioapp.factory('XMLDataService', function($log, $q, $http){
             transformResponse:function(data) {
                 // convert the data to JSON and provide
                 // it to the success function below
-                // IMPORTANT: node name are converted to camelCase for JSON compatiblity!
+                // INFO: node names are converted to camelCase for JSON compatiblity!
                 var x2js = new X2JS();
                 var json = x2js.xml_str2json( data );
                 return json;
@@ -254,7 +263,7 @@ freeradioapp.factory('XMLDataService', function($log, $q, $http){
             transformResponse:function(data) {
                 // convert the data to JSON and provide
                 // it to the success function below
-                // IMPORTANT: node name are converted to camelCase for JSON compatiblity!
+                // INFO: node names are converted to camelCase for JSON compatiblity!
                 var x2js = new X2JS();
                 var json = x2js.xml_str2json( data );
                 return json;
@@ -338,6 +347,8 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
         }
 
         CacheService.getFile("meta_cache.json", callback);
+
+        // INFO: filesystem-tests
         // FileSystemService.getFile("meta_cache.json")
         // .then(function(response){
         //     _setMetaData(response.freeradioapp);
@@ -352,11 +363,12 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
     var _updateMetaCacheLocal = function() {
         XMLDataService.getLocal("meta.xml")
         .success(function(response){
-            // TODO: save into .json-file
+            // INFO: filesystem-tests
             // FileSystemService.saveFile("meta_cache.json", JSON.stringify(response))
             // .then(function(){
             //     _getMetaDataFromCache();
             // });
+
             function callback(result){
                 //var data = JSON.parse(result.data);
                 _setMetaData(result.data.freeradioapp);
@@ -400,6 +412,7 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
      * Load stationdata from local json-cache
      */
     var _getStationDataFromCache = function() {
+        // INFO: filesystem-tests
         // FileSystemService.getFile("stations_cache.json")
         // .then(function(response){
         //     _setStationData(response);
@@ -506,11 +519,19 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
             return;
         
         _lastStationDataUpdate = Date.now();
+        var data = _stationData;
 
         angular.forEach(_metaData.stationlist.station, function(value, key) {
             // only update if needed or forced
             if(forceRefresh || _isStationDataExpired(value._id)) {
-                promises.push(XMLDataService.getRemote(value.xmluri));
+                promises.push(XMLDataService.getRemote(value.xmluri)
+                    .success(function(response) {
+                        data.stations[response.station.info.fullname] = response;
+                    })
+                    .error(function(e) {
+                        $log.error("DataService: Local access of local station-xml failed: " + e);
+                    })
+                );
             }
         });
 
@@ -537,12 +558,9 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
             }
         });
 
+        // update the stationscache later
         setTimeout(_updateStationCacheLocal, 500);
     }
-
-    
-    //_getMetaDataFromCache();
-    //_getStationDataFromCache();
 }
 
 /**
@@ -609,11 +627,11 @@ function FavoriteService($http, $q, FileSystemService, CacheService, DeferredWit
         return _deferred.promise;
     }
 
-    this.addFavorite = function(data) {
+    this.addFavorite = function(data, type) {
         // TODO: implement
     }
 
-    this.removeFavorite = function(name, data) {
+    this.removeFavorite = function(fav, type) {
         // TODO: implement
     }
 }

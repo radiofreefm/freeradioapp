@@ -130,7 +130,6 @@ freeradioapp.controller('StationDetailController', function ($log, $scope, $root
  * Saving and loading favorites
  */
 freeradioapp.controller('FavoriteController', function ($log, $scope, FavoriteService) {
-	//TODO
     $scope.favorites = FavoriteService.getFavorites();
     $scope.noData = true;
     
@@ -145,7 +144,6 @@ freeradioapp.controller('FavoriteController', function ($log, $scope, FavoriteSe
     });
 
     FavoriteService.init();
-
 });
 
 
@@ -166,7 +164,7 @@ freeradioapp.controller('SearchController', function ($rootScope, $scope) {
 
 /**
  * Custom category filter for Sendeplan
- * TODO: implement for more then one broadcast!
+ * TODO: implement fitlering once the XML-structure is clear
  */
 angular.module("FreeRadioApp.filters", []).filter("categoryFilter", function() {
     return function(input, scope) {
@@ -187,12 +185,6 @@ angular.module("FreeRadioApp.filters", []).filter("categoryFilter", function() {
  * Broadcasting schedule
  */
 freeradioapp.controller('ScheduleController', function ($rootScope, $scope, $timeout, BROADCAST_CATEGORIES) {
-    $scope.$evalAsync(function(scope){
-        $timeout(function(){
-            // TODO: do
-        });
-    });
-
     $scope.categories = BROADCAST_CATEGORIES;
     angular.forEach($scope.categories, function(value, key){
         value["_checked"] = false;
@@ -205,15 +197,4 @@ freeradioapp.controller('ScheduleController', function ($rootScope, $scope, $tim
     $scope.toggleSelection = function(id){
         $scope.categories[id]._checked = !$scope.categories[id]._checked;
     }
-/*
-    $scope.categoryFilter = function(broadcast){
-        debugger;
-        angular.forEach($scope.categories, function(value, key) {
-            if(value._checked) {
-
-            }
-        });
-
-        return true;
-    }*/
 });
