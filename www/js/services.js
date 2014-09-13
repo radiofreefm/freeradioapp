@@ -171,7 +171,7 @@ freeradioapp.factory('XMLDataService', function($log, $q, $http, FileSystemServi
         return $http({
             method: 'GET',
             /* TODO: CORS problem with accessing remote xmls */
-            url: "data/" + filename
+            url: "data/" + filename,
             transformResponse:function(data) {
                 // convert the data to JSON and provide
                 // it to the success function below
