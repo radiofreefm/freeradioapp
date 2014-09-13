@@ -54,11 +54,6 @@ $(document).ready(function(){
     // Init all items dynamically created via angular.
     $("[data-role='listview']").listview().listview('refresh');
     //$("input[type='checkbox'").checkboxradio().checkboxradio( "refresh" );
-
-    // iOS 7 statusbar-bug
-    if (parseFloat(window.device.version) >= 7.0) {
-          document.body.style.marginTop = "20px";
-    }
 });
 
 
