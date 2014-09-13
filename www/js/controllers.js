@@ -35,6 +35,8 @@ freeradioapp.controller('AppController', function ($http, $scope, $rootScope, Sh
         $("[data-role='listview']").listview().listview('refresh');
     });
 
+    DataService.init();
+
     // Old version with event-system and standard $q - not working with multiple updates
     /*DataService.metaDataPromise.then(function(newMetaData) {
         updateMetaData(newMetaData);
@@ -132,14 +134,17 @@ freeradioapp.controller('FavoriteController', function ($log, $scope, FavoriteSe
     $scope.favorites = FavoriteService.getFavorites();
     $scope.noData = true;
     
-    $scope.favorites.then(function(data){
-        $scope.favorites= data.freeradioapp;
+    $scope.favorites.update(function(data){
+        $scope.favorites= data;
         $scope.noData = false;
+        console.log("Updated Favorites:");
         console.log(data);
     }, function(e){
         $log.warn("FavoriteController: no favorites for user.")
         $scope.noData = true;
-    })
+    });
+
+    FavoriteService.init();
 
 });
 
@@ -182,7 +187,6 @@ freeradioapp.controller('ScheduleController', function ($rootScope, $scope, $tim
     }
 
     $scope.isIncluded = function(broadcast){
-        debugger;
         angular.forEach($scope.categories, function(value, key) {
             if(value._checked) {
                 angular.forEach(broadcast.categories, function(value, key){

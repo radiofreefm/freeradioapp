@@ -45,7 +45,6 @@ String.prototype.hashCode = function() {
  *  READY                     *
  ******************************/
 $(document).ready(function(){
-
     console.log("Initialising jQuery.mobile components.")
     /* jQuery Mobile External Inits */
     //$("body>[data-role='header']").toolbar();

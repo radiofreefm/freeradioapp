@@ -19,10 +19,14 @@
 
     <!-- PhoneGap -->
     <preference name="phonegap-version" value="3.5.0" />
+    <access origin="*" />
 
     <!-- iOS -->
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="handset" />
+
+    <!-- Android -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
 
     <!-- Plugins -->

@@ -230,7 +230,7 @@
 		<div ng-if="!noData">
 			<ul data-role="listview" data-inset="true">
 				<li data-role="list-divider">Sender</li>
-			    <li ng-repeat="station in favorites.favorites.stations">
+			    <li ng-repeat="station in favorites.stations">
 			    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id, station.name)">
 			    		<h3>{{station.name}}</h3>
 			    		<p>{{metaData.stationslist.station[station._id].station.city}} | {{metaData.stationslist.station[station._id].station.frequency}} MHz</p>
@@ -240,7 +240,7 @@
 
 			<ul data-role="listview" data-inset="true">
 				<li data-role="list-divider">Sendung</li>
-			    <li ng-repeat="broadcast in favorites.favorites.broadcasts">
+			    <li ng-repeat="broadcast in favorites.broadcasts">
 			    	<a href="#">{{broadcast.name}}</a>
 			    </li>
 			</ul>

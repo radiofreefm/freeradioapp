@@ -30,10 +30,15 @@ function CacheService() {
     var _that = this;
     this.isInitalized = false;
 
-    var _store = new Lawnchair({name:'testing'}, function(store) {
+    var _store = new Lawnchair({name:'Free Radio App'}, function(store) {
         //init
         _that.isInitalized = true;
     });
+
+    this.reset = function(){
+        _store.nuke();
+    }
+
     /**
      * Checks if file is in persistent storage
      */
@@ -52,7 +57,7 @@ function CacheService() {
      * Save data into file (and create that if necessary).
      */
     this.saveFile = function(filename, data, callback) {
-        _store.save({filename:data}, callback);
+        _store.save({key:filename, data:data}, callback);
     }
 }
 
@@ -206,6 +211,7 @@ function FileSystemService($http, $q, $log) {
  */
 freeradioapp.factory('FileSystemService', function FileSystemServiceFactory($http, $q, $log) {
     //return new FileSystemService($http, $q, $log);
+    return function() {/* I am empty, sorry. */};
 });
 
 
@@ -327,7 +333,7 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
      */
     var _getMetaDataFromCache = function() {
         function callback(result){
-            var data = JSON.parse(result.filename);
+            var data = JSON.parse(result.data);
             _setMetaData(data.freeradioapp);
         }
 
@@ -352,7 +358,7 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
             //     _getMetaDataFromCache();
             // });
             function callback(result){
-                var data = JSON.parse(result.filename);
+                var data = JSON.parse(result.data);
                 _setMetaData(data.freeradioapp);
             }
 
@@ -402,7 +408,7 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
         // });
 
         function callback(result){
-            var data = JSON.parse(result.filename);
+            var data = JSON.parse(result.data);
             _setMetaData(data.freeradioapp);
         }
 
@@ -505,21 +511,21 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
         });
     }
 
-    this.initUserData = function() {
-        if(!FileSystemService.fileExists("userdata.json")) {
-
-        }
+    this.init = function() {
+        // init with cache data
+        CacheService.fileExists('meta_cache.json', function(exists){
+            if(!exists) {
+                $log.log('DataService: no cache data found, loading from local xmls.');
+                _updateMetaCacheLocal();
+            }
+            else {
+                $log.log('DataService: cache data found.')
+                _getMetaDataFromCache();
+            }
+        });
     }
 
-    // init with cache data
-    CacheService.fileExists('meta_cache.json', function(exists){
-        if(!exists) {
-            _updateMetaCacheLocal();
-        }
-        else {
-            _getMetaDataFromCache();
-        }
-    });
+    
     //_getMetaDataFromCache();
     //_getStationDataFromCache();
 }
@@ -539,21 +545,22 @@ freeradioapp.factory('DataService', function DataStorageFactory(DeferredWithUpda
 function FavoriteService($http, $q, FileSystemService, CacheService, DeferredWithUpdate) {
     var _data = undefined;
     var _deferred = DeferredWithUpdate.defer();
-    _deferred.resolve();
+    _deferred.resolve({});
     var _that = this;
 
     this.init = function() {
-        CacheService.exists('userdata.json', function(exists){
+        CacheService.fileExists('favorites.json', function(exists){
             if(!exists) {
                 CacheService.saveFile(
-                    'userdata.json',
-                    '{"freeradioapp": {"_lastupdate": "2013-08-21T15:07:38.6875000+02:00","favorites": {"stations": [{"_id": "0","name": "Radio StHörfunk"},{"_id": "1","name": "Free FM"}],"broadcasts": [{"_stationid": "0","name": "Testsendung"}]}}}',
+                    'favorites.json',
+                    '{"_lastupdate": "2013-08-21T15:07:38.6875000+02:00", "stations": [{"_id": "0","name": "Radio StHörfunk"},{"_id": "1","name": "Free FM"}],"broadcasts": [{"_stationid": "0","name": "Testsendung"}]}',
                     function(){
                         _loadFavorites();
                     }
                 );
             }
             else {
+                console.log('FavoriteService: cache data found.');
                 _loadFavorites();
             }
         });
@@ -577,11 +584,10 @@ function FavoriteService($http, $q, FileSystemService, CacheService, DeferredWit
             setTimeout(_that.loadFavorites, 1000);
         }*/
 
-        CacheService.get('userdata.json', function (data){
-            _setFavorites (data);
+        CacheService.getFile('favorites.json', function (results){
+            var data = JSON.parse(results.data);
+            _setFavorites(data);
         });
-
-        return _deferred.promise;
     }
 
     this.getFavorites = function() {
