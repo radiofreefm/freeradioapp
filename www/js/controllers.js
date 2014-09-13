@@ -35,6 +35,8 @@ freeradioapp.controller('AppController', function ($http, $scope, $rootScope, Sh
         $("[data-role='listview']").listview().listview('refresh');
     });
 
+    DataService.init();
+
     // Old version with event-system and standard $q - not working with multiple updates
     /*DataService.metaDataPromise.then(function(newMetaData) {
         updateMetaData(newMetaData);
@@ -100,20 +102,20 @@ freeradioapp.controller('StationDetailController', function ($log, $scope, $root
 
     // remote data
     updateStationData = function(message) {
-        if($rootScope.stationData.stations[message.id] === undefined) {
+        if($rootScope.stationData.stations[message.name] === undefined) {
             // TODO: errorhandling in case of missing data!
             $log.warn("StationDetailController: No cached station data found for '" + message.name +"'.")
-            XMLDataService.getLocal(message.name.hashCode()+".xml")
+            /*XMLDataService.getLocal(message.name.hashCode()+".xml")
             .then(function(data){
                 $scope.selectedStationData = data;
                 $scope.noData = false;
             }, function(e){
                 $log.error("StationDetailController: No local station.xml found for '" + message.name + "'.");
                 $scope.noData = true;
-            });
+            });*/
         }
         else {
-            $scope.selectedStationData = $rootScope.stationData.stations[message.id].station;
+            $scope.selectedStationData = $rootScope.stationData.stations[message.name].station;
             $scope.noData = false;
         }
     }
@@ -128,19 +130,20 @@ freeradioapp.controller('StationDetailController', function ($log, $scope, $root
  * Saving and loading favorites
  */
 freeradioapp.controller('FavoriteController', function ($log, $scope, FavoriteService) {
-	//TODO
-    $scope.favorites = FavoriteService.loadFavorites();
+    $scope.favorites = FavoriteService.getFavorites();
     $scope.noData = true;
     
-    $scope.favorites.then(function(data){
-        $scope.favorites= data.freeradioapp;
+    $scope.favorites.update(function(data){
+        $scope.favorites= data;
         $scope.noData = false;
+        console.log("Updated Favorites:");
         console.log(data);
     }, function(e){
         $log.warn("FavoriteController: no favorites for user.")
         $scope.noData = true;
-    })
+    });
 
+    FavoriteService.init();
 });
 
 
@@ -158,16 +161,30 @@ freeradioapp.controller('SearchController', function ($rootScope, $scope) {
     $scope.orderProp = "name";
 });
 
+
+/**
+ * Custom category filter for Sendeplan
+ * TODO: implement fitlering once the XML-structure is clear
+ */
+angular.module("FreeRadioApp.filters", []).filter("categoryFilter", function() {
+    return function(input, scope) {
+        var result = {};
+        var _scope = scope;
+        angular.forEach(input, function(station){
+            //console.table(station.station.programme.broadcast.categories.category);
+            //console.table(_scope.categories);
+
+            // TODO: filter here
+            result[station.station.info.fullname] = station;
+        });
+        return result;
+    };
+});
+
 /**
  * Broadcasting schedule
  */
 freeradioapp.controller('ScheduleController', function ($rootScope, $scope, $timeout, BROADCAST_CATEGORIES) {
-    $scope.$evalAsync(function(scope){
-        $timeout(function(){
-            // TODO: do
-        });
-    });
-
     $scope.categories = BROADCAST_CATEGORIES;
     angular.forEach($scope.categories, function(value, key){
         value["_checked"] = false;
@@ -178,19 +195,6 @@ freeradioapp.controller('ScheduleController', function ($rootScope, $scope, $tim
     ];
 
     $scope.toggleSelection = function(id){
-        console.table($scope.categories);
-    }
-
-    $scope.isIncluded = function(broadcast){
-        debugger;
-        angular.forEach($scope.categories, function(value, key) {
-            if(value._checked) {
-                angular.forEach(broadcast.categories, function(value, key){
-
-                });
-            }
-        });
-
-        return true;
+        $scope.categories[id]._checked = !$scope.categories[id]._checked;
     }
 });

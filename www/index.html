@@ -2,11 +2,12 @@
 <html lang="de" ng-app="FreeRadioApp">
 <head>
 	<metadata charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
 	<link rel="stylesheet" href="css/jquery.mobile.min.css" />
 	<link rel="stylesheet" href="css/ol3.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<script src="cordova.js"></script>
+	<script src="js/lib/lawnchair-0.6.1.min.js"></script>
 	<script src="js/lib/jquery.min.js"></script>
 	<script src="js/lib/jquery.mobile.min.js"></script>
 	<script src="js/lib/angular.min.js"></script>
@@ -229,7 +230,7 @@
 		<div ng-if="!noData">
 			<ul data-role="listview" data-inset="true">
 				<li data-role="list-divider">Sender</li>
-			    <li ng-repeat="station in favorites.favorites.stations">
+			    <li ng-repeat="station in favorites.stations">
 			    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id, station.name)">
 			    		<h3>{{station.name}}</h3>
 			    		<p>{{metaData.stationslist.station[station._id].station.city}} | {{metaData.stationslist.station[station._id].station.frequency}} MHz</p>
@@ -239,7 +240,7 @@
 
 			<ul data-role="listview" data-inset="true">
 				<li data-role="list-divider">Sendung</li>
-			    <li ng-repeat="broadcast in favorites.favorites.broadcasts">
+			    <li ng-repeat="broadcast in favorites.broadcasts">
 			    	<a href="#">{{broadcast.name}}</a>
 			    </li>
 			</ul>
@@ -280,7 +281,7 @@
 			    </fieldset>
 			</form>
 			<ul data-role="listview" data-inset="true">
-		    	<li ng-repeat="broadcast in stationData.stations | filter:{included:true} | orderBy:orderProp">
+		    	<li ng-repeat="broadcast in stationData.stations | categoryFilter:this | orderBy:orderProp">
 		    		<a href="#">{{broadcast.station.programme.broadcast.title}}</a>
 		    	</li>
 			</ul>
