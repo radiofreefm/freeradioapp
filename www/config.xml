@@ -23,6 +23,9 @@
     <!-- iOS -->
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="handset" />
+    <gap:plugin name="com.phonegap.plugin.statusbar" version="1.1.0" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+
 
     <!--
       This allows your app to load assets from all domains
