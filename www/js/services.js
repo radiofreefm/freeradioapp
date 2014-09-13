@@ -29,8 +29,9 @@ freeradioapp.factory('SharedStationService', function($rootScope) {
  * TODO: update to phonegap file-service.
  */
 function FileSystemService($http, $q, $log) {
-    var _directory = cordova.file.dataDirectory;
+    var _directory = LocalFileSystem.PERSISTENT;
     var _quota = 1024 * 5;
+    var _fs = null;
     //window.webkitStorageInfo.queryUsageAndQuota();
 
     function errorHandler(e) {
@@ -61,13 +62,9 @@ function FileSystemService($http, $q, $log) {
     }
 
     // startup
-    window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-    window.webkitStorageInfo.requestQuota(PERSISTENT, _quota, function(grantedBytes) {
-        window.requestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);
-    }, function(e) {
-        $log.error('FileSystemService: ' + e);
-    });
-    //window.requestFileSystem(type, size, successCallback, opt_errorCallback)
+    window.requestFileSystem(_directory, 0, function(fs){
+        _fs = fs;
+    }, errorHandler);
 
     // TODO: change to phonegap filesystem
     this.getFile = function(filename) {
@@ -75,17 +72,17 @@ function FileSystemService($http, $q, $log) {
         //return $http.get(uri);
         var deferred = $q.defer();
 
-        fs.root.getFile(filename, {}, function(fileEntry) {
+        _fs.root.getFile(filename, {}, function(fileEntry) {
             // Get a File object representing the file,
             // then use FileReader to read its contents.
             fileEntry.file(function(file) {
                 var reader = new FileReader();
 
                 reader.onloadend = function(e) {
-                    deferred.resolve(this.result);
+                    deferred.resolve(e.target.result);
                 };
 
-                reader.readAsText(file);
+                reader.readAsDataURL(file);
             }, errorHandler);
         }, errorHandler);
 
@@ -95,7 +92,7 @@ function FileSystemService($http, $q, $log) {
     this.saveFile = function(filename, data) {
         var deferred = $q.defer();
 
-        fs.root.getFile(filename, {create: true}, function(fileEntry) {
+        _fs.root.getFile(filename, {create: true}, function(fileEntry) {
             // Create a FileWriter object for our FileEntry (log.txt).
             fileEntry.createWriter(function(fileWriter) {
 
