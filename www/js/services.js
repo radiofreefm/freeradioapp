@@ -31,6 +31,9 @@ freeradioapp.factory('SharedStationService', function($rootScope) {
 function FileSystemService($http, $q, $log) {
     var _directory = LocalFileSystem.PERSISTENT;
     var _fs = null;
+    var _that = this;
+
+    this.isInitalized = false;
 
     function errorHandler(e) {
       var msg = '';
@@ -62,14 +65,23 @@ function FileSystemService($http, $q, $log) {
     // startup
     window.requestFileSystem(_directory, 0, function(fs){
         _fs = fs;
+        _that.isInitalized = true;
     }, errorHandler);
+
+
+    /**
+     * Checks if file is in persistent storage
+     */
+    this.hasFile = function(filename) {
+        return false;
+    }
 
     /**
      * Get File from perstistent storage
      */
     this.getFile = function(filename) {
         // fs not initialised
-        if(_fs == undefined)
+        if(!_that.isInitalized)
             return;
         //var uri = _directory + "/" + filename;
         //return $http.get(uri);
@@ -97,7 +109,7 @@ function FileSystemService($http, $q, $log) {
      */
     this.saveFile = function(filename, data) {
         // fs not initialised
-        if(_fs == undefined)
+        if(!_that.isInitalized)
             return;
 
         var deferred = $q.defer();
@@ -429,15 +441,21 @@ freeradioapp.factory('DataService', function DataStorageFactory(DeferredWithUpda
  */
 function FavoriteService($http, $q, FileSystemService) {
     var _data = undefined;
+    var _that = this;
 
     this.loadFavorites = function() {
         var deferred = $q.defer();
-        FileSystemService.getFile("userdata.json").then(function(data){
-            deferred.resolve(data);
-            //console.table($scope.favorites);
-        }, function(e){
-            deferred.reject(e);
-        });
+        if(FileSystemService.isInitalized) {
+            FileSystemService.getFile("userdata.json").then(function(data){
+                deferred.resolve(data);
+                //console.table($scope.favorites);
+            }, function(e){
+                deferred.reject(e);
+            });
+        }
+        else{
+            setTimeout(_that.loadFavorites, 1000);
+        }
         return deferred.promise;
     }
 
