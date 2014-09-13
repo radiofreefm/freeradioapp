@@ -30,9 +30,7 @@ freeradioapp.factory('SharedStationService', function($rootScope) {
  */
 function FileSystemService($http, $q, $log) {
     var _directory = LocalFileSystem.PERSISTENT;
-    var _quota = 1024 * 5;
     var _fs = null;
-    //window.webkitStorageInfo.queryUsageAndQuota();
 
     function errorHandler(e) {
       var msg = '';
@@ -66,8 +64,13 @@ function FileSystemService($http, $q, $log) {
         _fs = fs;
     }, errorHandler);
 
-    // TODO: change to phonegap filesystem
+    /**
+     * Get File from perstistent storage
+     */
     this.getFile = function(filename) {
+        // fs not initialised
+        if(_fs == undefined)
+            return;
         //var uri = _directory + "/" + filename;
         //return $http.get(uri);
         var deferred = $q.defer();
@@ -89,7 +92,14 @@ function FileSystemService($http, $q, $log) {
         return deferred.promise;
     }
 
+    /**
+     * Save data into file (and create that if necessary).
+     */
     this.saveFile = function(filename, data) {
+        // fs not initialised
+        if(_fs == undefined)
+            return;
+
         var deferred = $q.defer();
 
         _fs.root.getFile(filename, {create: true}, function(fileEntry) {
@@ -383,7 +393,7 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
     }
 
     // init with cache data
-    _updateMetaCacheLocal();
+    setTimeout(function() { _updateMetaCacheLocal(); }, 1000);
     //_getMetaDataFromCache();
     //_getStationDataFromCache();
 }
