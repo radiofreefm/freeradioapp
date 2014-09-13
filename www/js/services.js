@@ -28,25 +28,104 @@ freeradioapp.factory('SharedStationService', function($rootScope) {
  * Used to update cache-files.
  * TODO: update to phonegap file-service.
  */
-function FileSystemService($http) {
-    var _folder = "data";
+function FileSystemService($http, $q, $log) {
+    var _directory = cordova.file.dataDirectory;
+    var _quota = 1024 * 5;
+    //window.webkitStorageInfo.queryUsageAndQuota();
+
+    function errorHandler(e) {
+      var msg = '';
+
+      switch (e.code) {
+        case FileError.QUOTA_EXCEEDED_ERR:
+          msg = 'QUOTA_EXCEEDED_ERR';
+          break;
+        case FileError.NOT_FOUND_ERR:
+          msg = 'NOT_FOUND_ERR';
+          break;
+        case FileError.SECURITY_ERR:
+          msg = 'SECURITY_ERR';
+          break;
+        case FileError.INVALID_MODIFICATION_ERR:
+          msg = 'INVALID_MODIFICATION_ERR';
+          break;
+        case FileError.INVALID_STATE_ERR:
+          msg = 'INVALID_STATE_ERR';
+          break;
+        default:
+          msg = 'Unknown Error';
+          break;
+      };
+
+      $log.error('FileSystemService: ' + msg);
+    }
+
+    // startup
+    window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+    window.webkitStorageInfo.requestQuota(PERSISTENT, _quota, function(grantedBytes) {
+        window.requestFileSystem(PERSISTENT, grantedBytes, onInitFs, errorHandler);
+    }, function(e) {
+        $log.error('FileSystemService: ' + e);
+    });
+    //window.requestFileSystem(type, size, successCallback, opt_errorCallback)
 
     // TODO: change to phonegap filesystem
     this.getFile = function(filename) {
-        var uri = _folder + "/" + filename;
-        return $http.get(uri);
+        //var uri = _directory + "/" + filename;
+        //return $http.get(uri);
+        var deferred = $q.defer();
+
+        fs.root.getFile(filename, {}, function(fileEntry) {
+            // Get a File object representing the file,
+            // then use FileReader to read its contents.
+            fileEntry.file(function(file) {
+                var reader = new FileReader();
+
+                reader.onloadend = function(e) {
+                    deferred.resolve(this.result);
+                };
+
+                reader.readAsText(file);
+            }, errorHandler);
+        }, errorHandler);
+
+        return deferred.promise;
     }
 
-    this.saveFile = function(name, data) {
-        // TODO: implement
+    this.saveFile = function(filename, data) {
+        var deferred = $q.defer();
+
+        fs.root.getFile(filename, {create: true}, function(fileEntry) {
+            // Create a FileWriter object for our FileEntry (log.txt).
+            fileEntry.createWriter(function(fileWriter) {
+
+                fileWriter.onwriteend = function(e) {
+                    $log.log('Write completed.');
+                    deferred.resolve();
+                };
+
+                fileWriter.onerror = function(e) {
+                    deferred.reject(e);
+                    $log.error('FileSystemService: write failed, ' + e.toString());
+                };
+
+                // Create a new Blob and write it to log.txt.
+                var blob = new Blob([data], {type: 'text/plain'});
+
+                fileWriter.write(blob);
+
+            }, errorHandler);
+        }, errorHandler);
+
+        return deferred.promise;
     }
 }
 
 /**
  * Create Service
  */
-freeradioapp.factory('FileSystemService', function FileSystemServiceFactory($http) {
-    return new FileSystemService($http);
+freeradioapp.factory('FileSystemService', function FileSystemServiceFactory($http, $q, $log) {
+    return new FileSystemService($http, $q, $log);
  });
 
 
@@ -167,7 +246,10 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
         XMLDataService.getLocal("meta.xml")
         .then(function(response){
             // TODO: save into .json-file
-            _getMetaDataFromCache();
+            FileSystemService.saveFile("meta_cache.json", JSON.stringify(response))
+            .then(function(){
+                _getMetaDataFromCache();
+            });
         }, function(e){
             $log.error("DataService: Local access of 'meta.xml' failed: " + e);
         });
@@ -304,8 +386,9 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
     }
 
     // init with cache data
-    _getMetaDataFromCache();
-    _getStationDataFromCache();
+    _updateMetaCacheLocal();
+    //_getMetaDataFromCache();
+    //_getStationDataFromCache();
 }
 
 /**
