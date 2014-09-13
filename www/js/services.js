@@ -26,14 +26,14 @@ freeradioapp.factory('SharedStationService', function($rootScope) {
 /**
  * CacheService to save cache data onto the phone.
  */
-function CacheService($log) {
+function CacheService() {
     var _that = this;
     this.isInitalized = false;
 
-    var _store = new lawnchair({name:'testing'}, function(store) {
+    var _store = new Lawnchair({name:'testing'}, function(store) {
         //init
         _that.isInitalized = true;
-    }
+    });
     /**
      * Checks if file is in persistent storage
      */
@@ -59,8 +59,8 @@ function CacheService($log) {
 /**
  * Create Service
  */
-freeradioapp.factory('CacheService', function CacheServiceFactory($log) {
-    return new CacheService($log);
+freeradioapp.factory('CacheService', function CacheServiceFactory() {
+    return new CacheService();
 });
 
 
@@ -205,7 +205,7 @@ function FileSystemService($http, $q, $log) {
  * Create Service
  */
 freeradioapp.factory('FileSystemService', function FileSystemServiceFactory($http, $q, $log) {
-    return new FileSystemService($http, $q, $log);
+    //return new FileSystemService($http, $q, $log);
 });
 
 
@@ -284,14 +284,14 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
     var _metaDeferred = DeferredWithUpdate.defer();     // deferred object, see: https://docs.angularjs.org/api/ng/service/$q
     _metaDeferred.resolve({}); // dont know why we need this :(
     
-    var _metaData = undefined;                          // class-internal storage for data
+    var _metaData = {};                          // class-internal storage for data
     var _metaDataPromise = _metaDeferred.promise;       // external data-promise for update-purposes
     var _lastMetaDataUpdate;                            // save last update, to prevent infinite loops
 
     var _stationDeferred = DeferredWithUpdate.defer();  // deferred object, see: https://docs.angularjs.org/api/ng/service/$q
     _stationDeferred.resolve({}); // dont know why we need this :(
 
-    var _stationData = undefined;                       
+    var _stationData = {};                       
     var _stationDataPromise = _stationDeferred.promise;
     var _lastStationDataUpdate;
 
@@ -327,7 +327,8 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
      */
     var _getMetaDataFromCache = function() {
         function callback(result){
-            _setMetaData(result.freeradioapp);
+            var data = JSON.parse(result.filename);
+            _setMetaData(data.freeradioapp);
         }
 
         CacheService.getFile("meta_cache.json", callback);
@@ -351,7 +352,8 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
             //     _getMetaDataFromCache();
             // });
             function callback(result){
-                _setMetaData(result.freeradioapp);
+                var data = JSON.parse(result.filename);
+                _setMetaData(data.freeradioapp);
             }
 
             CacheService.saveFile("meta_cache.json", JSON.stringify(response), callback);
@@ -392,12 +394,19 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
      * Load stationdata from local json-cache
      */
     var _getStationDataFromCache = function() {
-        FileSystemService.getFile("stations_cache.json")
-        .then(function(response){
-            _setStationData(response);
-        }, function(e){
-            $log.error("DataService: Access of cached station-file failed: " + e);
-        });
+        // FileSystemService.getFile("stations_cache.json")
+        // .then(function(response){
+        //     _setStationData(response);
+        // }, function(e){
+        //     $log.error("DataService: Access of cached station-file failed: " + e);
+        // });
+
+        function callback(result){
+            var data = JSON.parse(result.filename);
+            _setMetaData(data.freeradioapp);
+        }
+
+        CacheService.getFile("stations_cache.json", callback);
     }
 
     /**
@@ -503,7 +512,14 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
     }
 
     // init with cache data
-    setTimeout(function() { _updateMetaCacheLocal(); }, 1000);
+    CacheService.fileExists('meta_cache.json', function(exists){
+        if(!exists) {
+            _updateMetaCacheLocal();
+        }
+        else {
+            _getMetaDataFromCache();
+        }
+    });
     //_getMetaDataFromCache();
     //_getStationDataFromCache();
 }
@@ -523,6 +539,7 @@ freeradioapp.factory('DataService', function DataStorageFactory(DeferredWithUpda
 function FavoriteService($http, $q, FileSystemService, CacheService, DeferredWithUpdate) {
     var _data = undefined;
     var _deferred = DeferredWithUpdate.defer();
+    _deferred.resolve();
     var _that = this;
 
     this.init = function() {
