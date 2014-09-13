@@ -129,7 +129,7 @@ freeradioapp.controller('StationDetailController', function ($log, $scope, $root
  */
 freeradioapp.controller('FavoriteController', function ($log, $scope, FavoriteService) {
 	//TODO
-    $scope.favorites = FavoriteService.loadFavorites();
+    $scope.favorites = FavoriteService.getFavorites();
     $scope.noData = true;
     
     $scope.favorites.then(function(data){

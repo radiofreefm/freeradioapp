@@ -24,9 +24,49 @@ freeradioapp.factory('SharedStationService', function($rootScope) {
 });
 
 /**
- * FileSystemService to save data onto the phone.
- * Used to update cache-files.
- * TODO: update to phonegap file-service.
+ * CacheService to save cache data onto the phone.
+ */
+function CacheService($log) {
+    var _that = this;
+    this.isInitalized = false;
+
+    var _store = new lawnchair({name:'testing'}, function(store) {
+        //init
+        _that.isInitalized = true;
+    }
+    /**
+     * Checks if file is in persistent storage
+     */
+    this.fileExists = function(filename, callback) {
+        _store.exists(filename, callback);
+    }
+
+    /**
+     * Get File from perstistent storage
+     */
+    this.getFile = function(filename, callback) {
+        _store.get(filename, callback)
+    }
+
+    /**
+     * Save data into file (and create that if necessary).
+     */
+    this.saveFile = function(filename, data, callback) {
+        _store.save({filename:data}, callback);
+    }
+}
+
+/**
+ * Create Service
+ */
+freeradioapp.factory('CacheService', function CacheServiceFactory($log) {
+    return new CacheService($log);
+});
+
+
+/**
+ * FileSystemService to save and load persistent data from the phone.
+ * NOT USED, because complicated!
  */
 function FileSystemService($http, $q, $log) {
     var _directory = LocalFileSystem.PERSISTENT;
@@ -72,8 +112,29 @@ function FileSystemService($http, $q, $log) {
     /**
      * Checks if file is in persistent storage
      */
-    this.hasFile = function(filename) {
-        return false;
+    this.fileExists = function(filename) {
+        // fs not initialised
+        if(!_that.isInitalized)
+            return;
+        //var uri = _directory + "/" + filename;
+        //return $http.get(uri);
+        var deferred = $q.defer();
+
+        _fs.root.getFile(filename, {}, function(fileEntry) {
+            // Get a File object representing the file,
+            // then use FileReader to read its contents.
+            fileEntry.file(function(file) {
+                var reader = new FileReader();
+
+                reader.onloadend = function(e) {
+                    deferred.resolve(e.target.result);
+                };
+
+                reader.readAsDataURL(file);
+            }, errorHandler);
+        }, errorHandler);
+
+        return deferred.promise;
     }
 
     /**
@@ -145,14 +206,14 @@ function FileSystemService($http, $q, $log) {
  */
 freeradioapp.factory('FileSystemService', function FileSystemServiceFactory($http, $q, $log) {
     return new FileSystemService($http, $q, $log);
- });
+});
 
 
 /**
  * XMLDataService to access remote and local xml-files.
  * These files will then be transformed into json-objects for use in angular.
  */
-freeradioapp.factory('XMLDataService', function($log, $q, $http, FileSystemService){
+freeradioapp.factory('XMLDataService', function($log, $q, $http){
 	var xmlDataService = {};
 
 	xmlDataService.getRemote = function(xmlurl){
@@ -218,7 +279,7 @@ freeradioapp.factory('XMLDataService', function($log, $q, $http, FileSystemServi
 /**
  * DataService functions as a backend data-caching and -updating service.
  */
-function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataService, FileSystemService, STATION_EXPIRATION_DAYS, META_EXPIRATION_DAYS, TIME_BETWEEN_UPDATES) {
+function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataService, FileSystemService, CacheService, STATION_EXPIRATION_DAYS, META_EXPIRATION_DAYS, TIME_BETWEEN_UPDATES) {
     var _that = this;                                   // internal reference on instance, due to JS scopes
     var _metaDeferred = DeferredWithUpdate.defer();     // deferred object, see: https://docs.angularjs.org/api/ng/service/$q
     _metaDeferred.resolve({}); // dont know why we need this :(
@@ -265,12 +326,17 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
      * Load metadata from local json-file.
      */
     var _getMetaDataFromCache = function() {
-        FileSystemService.getFile("meta_cache.json")
-        .then(function(response){
-            _setMetaData(response.freeradioapp);
-        }, function(e){
-            $log.error("DataService: Local acces of cached meta-file failed: " + e);
-        });
+        function callback(result){
+            _setMetaData(result.freeradioapp);
+        }
+
+        CacheService.getFile("meta_cache.json", callback);
+        // FileSystemService.getFile("meta_cache.json")
+        // .then(function(response){
+        //     _setMetaData(response.freeradioapp);
+        // }, function(e){
+        //     $log.error("DataService: Local acces of cached meta-file failed: " + e);
+        // });
     }
 
     /**
@@ -280,10 +346,15 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
         XMLDataService.getLocal("meta.xml")
         .success(function(response){
             // TODO: save into .json-file
-            FileSystemService.saveFile("meta_cache.json", JSON.stringify(response))
-            .then(function(){
-                _getMetaDataFromCache();
-            });
+            // FileSystemService.saveFile("meta_cache.json", JSON.stringify(response))
+            // .then(function(){
+            //     _getMetaDataFromCache();
+            // });
+            function callback(result){
+                _setMetaData(result.freeradioapp);
+            }
+
+            CacheService.saveFile("meta_cache.json", JSON.stringify(response), callback);
         })
         .error(function(e){
             $log.error("DataService: Local access of 'meta.xml' failed: " + e);
@@ -377,7 +448,11 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
         //TODO: change remote-access url;
         XMLDataService.getRemote("data/meta-demo.xml")
         .success(function(response){
-            _setMetaData(response.freeradioapp);
+            function callback(result){
+                _setMetaData(result.freeradioapp);
+            }
+
+            CacheService.saveFile("meta_cache.json", JSON.stringify(response), callback);
         })
         .error(function(e){
             $log.error("DataService: Remote access of meta.xml failed:" + e);
@@ -421,6 +496,12 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
         });
     }
 
+    this.initUserData = function() {
+        if(!FileSystemService.fileExists("userdata.json")) {
+
+        }
+    }
+
     // init with cache data
     setTimeout(function() { _updateMetaCacheLocal(); }, 1000);
     //_getMetaDataFromCache();
@@ -430,8 +511,8 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
 /**
  * Create Service
  */
-freeradioapp.factory('DataService', function DataStorageFactory(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataService, FileSystemService) {
-    return new DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataService, FileSystemService);
+freeradioapp.factory('DataService', function DataStorageFactory(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataService, FileSystemService, CacheService) {
+    return new DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataService, FileSystemService, CacheService);
  });
 
 
@@ -439,13 +520,35 @@ freeradioapp.factory('DataService', function DataStorageFactory(DeferredWithUpda
 /**
  * FavoriteService to save and load favorites.
  */
-function FavoriteService($http, $q, FileSystemService) {
+function FavoriteService($http, $q, FileSystemService, CacheService, DeferredWithUpdate) {
     var _data = undefined;
+    var _deferred = DeferredWithUpdate.defer();
     var _that = this;
 
-    this.loadFavorites = function() {
-        var deferred = $q.defer();
-        if(FileSystemService.isInitalized) {
+    this.init = function() {
+        CacheService.exists('userdata.json', function(exists){
+            if(!exists) {
+                CacheService.saveFile(
+                    'userdata.json',
+                    '{"freeradioapp": {"_lastupdate": "2013-08-21T15:07:38.6875000+02:00","favorites": {"stations": [{"_id": "0","name": "Radio StHörfunk"},{"_id": "1","name": "Free FM"}],"broadcasts": [{"_stationid": "0","name": "Testsendung"}]}}}',
+                    function(){
+                        _loadFavorites();
+                    }
+                );
+            }
+            else {
+                _loadFavorites();
+            }
+        });
+    }
+
+    _setFavorites = function(data) {
+        _data = data;
+        _deferred.resolve(data);
+    }
+
+    _loadFavorites = function() {
+        /*if(FileSystemService.isInitalized) {
             FileSystemService.getFile("userdata.json").then(function(data){
                 deferred.resolve(data);
                 //console.table($scope.favorites);
@@ -455,8 +558,17 @@ function FavoriteService($http, $q, FileSystemService) {
         }
         else{
             setTimeout(_that.loadFavorites, 1000);
-        }
-        return deferred.promise;
+        }*/
+
+        CacheService.get('userdata.json', function (data){
+            _setFavorites (data);
+        });
+
+        return _deferred.promise;
+    }
+
+    this.getFavorites = function() {
+        return _deferred.promise;
     }
 
     this.addFavorite = function(data) {
@@ -471,6 +583,6 @@ function FavoriteService($http, $q, FileSystemService) {
 /**
  * Create Service
  */
-freeradioapp.factory('FavoriteService', function FavoriteServiceFactory($http, $q, FileSystemService) {
-    return new FavoriteService($http, $q, FileSystemService);
+freeradioapp.factory('FavoriteService', function FavoriteServiceFactory($http, $q, FileSystemService, CacheService, DeferredWithUpdate) {
+    return new FavoriteService($http, $q, FileSystemService, CacheService, DeferredWithUpdate);
  });
