@@ -254,10 +254,9 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
      */
     var _getMetaDataFromCache = function() {
         FileSystemService.getFile("meta_cache.json")
-        .success(function(response){
+        .then(function(response){
             _setMetaData(response.freeradioapp);
-        })
-        .error(function(e){
+        }, function(e){
             $log.error("DataService: Local acces of cached meta-file failed: " + e);
         });
     }
@@ -267,13 +266,14 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
      */
     var _updateMetaCacheLocal = function() {
         XMLDataService.getLocal("meta.xml")
-        .then(function(response){
+        .success(function(response){
             // TODO: save into .json-file
             FileSystemService.saveFile("meta_cache.json", JSON.stringify(response))
             .then(function(){
                 _getMetaDataFromCache();
             });
-        }, function(e){
+        })
+        .error(function(e){
             $log.error("DataService: Local access of 'meta.xml' failed: " + e);
         });
     }
@@ -310,10 +310,9 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
      */
     var _getStationDataFromCache = function() {
         FileSystemService.getFile("stations_cache.json")
-        .success(function(response){
+        .then(function(response){
             _setStationData(response);
-        })
-        .error(function(e){
+        }, function(e){
             $log.error("DataService: Access of cached station-file failed: " + e);
         });
     }
@@ -329,10 +328,11 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
 
         angular.forEach(_that.getStationData().stations, function(value, key) {
             XMLDataService.getLocal(value.station.info.fullname.hashCode()+".xml")
-            .then(function(response) {
+            .success(function(response) {
                 // TODO: save into .json-file
                 //DataService.saveFile("stations_cache.json", response);
-            }, function(e) {
+            })
+            .error(function(e) {
                 $log.error("DataService: Local access of local station-xml failed: " + e);
             });
         }, _that);
@@ -401,9 +401,10 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
         });
 
         $q.all(promises)
-        .then(function(responses) {
+        .success(function(responses) {
             //TODO: update chache
-        }, function(e){
+        })
+        .error(function(e){
             $log.warn(e);
         });
     }
@@ -431,13 +432,12 @@ function FavoriteService($http, $q, FileSystemService) {
 
     this.loadFavorites = function() {
         var deferred = $q.defer();
-        FileSystemService.getFile("userdata.json").success(function(data){
+        FileSystemService.getFile("userdata.json").then(function(data){
             deferred.resolve(data);
             //console.table($scope.favorites);
-        })
-        .error(function(e){
+        }, function(e){
             deferred.reject(e);
-        })
+        });
         return deferred.promise;
     }
 
