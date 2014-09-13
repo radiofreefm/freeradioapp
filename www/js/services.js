@@ -39,6 +39,7 @@ function FileSystemService($http) {
 
     this.saveFile = function(name, data) {
         // TODO: implement
+        console.log(JSON.stringify(data));
     }
 }
 
@@ -273,6 +274,24 @@ function DataService(DeferredWithUpdate, $log, $rootScope, $q, $http, XMLDataSer
      */
     this.getStationData = function() {
         return _stationDataPromise;
+    }
+
+    this.updateDataForStation = function(id, data) {
+        if(data == undefined || id == undefined)
+            $log.error("DataService: no id or data provided.")
+            return;
+        
+        // deep copy
+        var stationdata = JSON.parse(JSON.stringify(_stationData));
+
+        // update local stationdata
+        stationdata.stations.station[id] = data
+
+        // set new data
+        _setStationData(stationdata);
+
+        // TODO: save station-data into cache-json
+        FileSystemService.saveFile("stations_cache.json", _stationData.)
     }
     
     /**
