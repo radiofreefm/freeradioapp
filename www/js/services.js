@@ -167,19 +167,35 @@ freeradioapp.factory('XMLDataService', function($log, $q, $http, FileSystemServi
     }
 
     xmlDataService.getLocal = function(filename) {
+
+        return $http({
+            method: 'GET',
+            /* TODO: CORS problem with accessing remote xmls */
+            url: "data/" + filename
+            transformResponse:function(data) {
+                // convert the data to JSON and provide
+                // it to the success function below
+                // IMPORTANT: node name are converted to camelCase for JSON compatiblity!
+                var x2js = new X2JS();
+                var json = x2js.xml_str2json( data );
+                return json;
+            }
+        });
+        /*
         var deferred = $q.defer();
 
         FileSystemService.getFile(filename)
-        .success(function(data) {
+        .then(function(data) {
+            // convert to JSON
             var x2js = new X2JS();
             var json = x2js.xml_str2json( data );
             deferred.resolve(json);
-        })
-        .error(function(e){
+        },function(e){
             deferred.reject();
             $log.warn("XMLDataService: No local file '" + filename + "' found.")
         });
-        return deferred.promise;
+
+        return deferred.promise;*/
     }
 
    return xmlDataService;
