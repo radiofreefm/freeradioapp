@@ -19,7 +19,7 @@
 
     <!-- PhoneGap -->
     <preference name="phonegap-version" value="3.5.0" />
-    <access origin="*" />
+    <access origin="*" subdomains="true" />
 
     <!-- iOS -->
     <preference name="orientation" value="portrait" />
@@ -36,9 +36,4 @@
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#E9E9E9" />
 
-
-    <!--
-      This allows your app to load assets from all domains
-    -->
-    <access origin="*" subdomains="true" />
 </widget>
