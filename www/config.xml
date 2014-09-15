@@ -26,8 +26,8 @@
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="handset" />
 
-    <!-- Android -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Android 
+    <uses-permission android:name="android.permission.INTERNET" /> -->
 
 
     <!-- Plugins -->
