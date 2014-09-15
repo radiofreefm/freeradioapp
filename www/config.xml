@@ -1,40 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns = "http://www.w3.org/ns/widgets"
 
-<!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
-<widget xmlns     = "http://www.w3.org/ns/widgets"
-        xmlns:android = "http://schemas.android.com/apk/res/android"
-        xmlns:cdv = "http://cordova.apache.org/ns/1.0"
-        xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.phonegap.freeradioapp"
-        version   = "0.4.0">
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.phonegap.example"
+        version     = "1.0.0"
+        versionCode = "10" >
 
-    <name>Freie Radios</name>
+        <!-- versionCode is optional and Android only -->
 
-    <description>
-        Freie Radios in BW und Deutschland
-    </description>
+        <preference name="phonegap-version" value="3.5.0" />
 
-    <author href="http://www.freefm.de/taxonomy/term/4270" email="florian.geiselhart@uni-ulm.de">
-        fg
-    </author>
+        <name>default config xml</name>
 
-    <!-- PhoneGap -->
-    <preference name="phonegap-version" value="3.5.0" />
-    <access origin="*" subdomains="true" />
+        <description>
+        Default Config
+        </description>
 
-    <!-- iOS -->
-    <preference name="orientation" value="portrait" />
-    <preference name="target-device" value="handset" />
+        <author href="http://freefm.de" email="webmaster@freefm.de">
+        Florian Geiselhart
+        </author>
 
-    <!-- Android 
-    <uses-permission android:name="android.permission.INTERNET" /> -->
-
-
-    <!-- Plugins -->
-    <gap:plugin name="org.apache.cordova.file" version="1.0.1" />
-
-    <gap:plugin name="com.phonegap.plugin.statusbar" version="1.1.0" />
-    <preference name="StatusBarOverlaysWebView" value="false" />
-    <preference name="StatusBarBackgroundColor" value="#E9E9E9" />
-
-</widget>
+    </widget>
