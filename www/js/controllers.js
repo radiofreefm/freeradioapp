@@ -5,7 +5,6 @@
  * Controllers for Angular.js
  */
 
-
 /**
  * Controller for retreiving meta.xml data for stations-list
  */

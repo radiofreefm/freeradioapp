@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CampusFM - HTML5</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	
+	<link rel="apple-touch-icon" href="http://www.uni-due.de/zim/kerkewitz/beispiele/campusfm/img/icon-campusfm.png" >
+	<link rel="apple-touch-icon-precomposed" href="http://www.uni-due.de/zim/kerkewitz/beispiele/campusfm/img/icon-campusfm.png">
+	<link rel="apple-touch-startup-image" href="http://www.uni-due.de/zim/kerkewitz/beispiele/campusfm/img/CampusFM-startup.png"> 
+
+	<!---   <link rel="stylesheet" href="invisibleframework.min.css" type="text/css" media="screen" />--->
+	<link rel="stylesheet" href="jqtouch.min.css" type="text/css" />
+	<link rel="stylesheet" href="theme.min.css" type="text/css" />
+</head>
+
+<body>
+	<div id="main" class="current">
+	<div class="toolbar"><h1>CampusFM</h1></div>
+
+	<div class="sideleft" style="text-align: center;">
+		<ul class="rounded">
+			<li > <img width=250 src="img/campusfm.png" > </li>
+			<li > </li>
+			<li > 
+				<div> <audio src="http://stream.freefm.de:8100/listen.pls" controls>Der Browser unterstützt dieses Audio-Element nicht.</audio> </div>
+			</li>
+			<li > </li>
+			<li > Bitte beachten Sie darauf, WiFi zu nutzen. Die Übertragung über Mobilfunk kann hohe Kosten verursachen.</li>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		$(window).load(function(){
+		$.jQTouch(); // Add functionality here
+		});
+	</script> 
+
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://www.kerkewitz.de/piwik/" : "http://www.kerkewitz.de/piwik/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 2);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://www.kerkewitz.de/piwik/piwik.php?idsite=2" style="border:0" alt="" /></p></noscript>
+<!-- End Piwik Tracking Code -->
+
+</body>
+</html>
+

@@ -5,7 +5,7 @@
  * Scripts for the App
  */
 
-'use strict';
+//'use strict';
 
 /******************************
  *  Angular                   *
@@ -23,7 +23,7 @@ freeradioapp.constant('BROADCAST_CATEGORIES',
     { _id: 2, _name: "Classical"},
     { _id: 3, _name: "Country"},
     { _id: 4, _name: "Dance"},
-    { _id: 5, _name: "Depp House"},
+    { _id: 5, _name: "Deep House"},
     { _id: 6, _name: "Disco"}
 ]);
 
@@ -45,9 +45,9 @@ String.prototype.hashCode = function() {
 };
 
 
-/******************************
- *  READY                     *
- ******************************/
+/*********************************************
+ *  READY, alle Elemente sind fertig geladen *
+ *********************************************/
 $(document).ready(function(){
     console.log("Initialising jQuery.mobile components.")
     
@@ -58,7 +58,8 @@ $(document).ready(function(){
     // Init all items dynamically created via angular.
     $("[data-role='listview']").listview().listview('refresh');
     //$("input[type='checkbox'").checkboxradio().checkboxradio( "refresh" );
-});
+    
 
+});
 
 
