@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de" ng-app="FreeRadioApp">
+<head>
+	<metadata charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"><!-- Für die Webansicht dazugepustet -->
+	<meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucient" />
+  
+    <link rel="stylesheet" href="css/mediaelementplayer.css" /> <!-- .css für die Streamwiedergabe, Bülent 22:09 Uhr 02.11.14 -->
+	<link rel="stylesheet" href="css/jquery.mobile.min_custom.css" />
+	<link rel="stylesheet" href="css/ol3.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <script src="js/mediaelement-and-player.min.js"></script> <!-- .js für die Streamwiedergabe, erweitert um js/... -->
+	<script src="js/lib/lawnchair-0.6.1.min.js"></script>
+	<script src="js/lib/jquery.min.js"></script>
+	<script src="js/lib/jquery.mobile.min.js"></script>
+	<script src="js/lib/angular.min.js"></script>
+	<script src="js/lib/deferred-with-update.js"></script>
+	<script src="js/lib/xml2json.js"></script>
+	<title>free radio app</title>
+
+</head>
+<body ng-controller="AppController">
+    
+
+<!-- Page:Main -->
+<div data-role="page" id="page-main" data-theme="a">
+	<!-- Header -->
+	<div id="head" data-theme="a" data-role="header" data-position="fixed" class="ui-header ui-bar-a">
+	    <h3 style="margin: auto">FREIE RADIOS</h3>
+	    <a href="#custom-popup" id="nav-popup-head" data-icon="bars" data-rel="popup" data-transition="slidedown" data-iconpos="notext" class="ui-btn-left" data-theme="a"></a><!-- Hier stand Menü -->
+        <div class="ui-btn-right"></div>    
+	</div>
+	<!-- /END Header -->
+	<!-- Content -->
+	<div id="main-content" data-role="main" >
+		<div id="main-tabs" class="navigation-tabs" data-role="tabs">
+			<!-- navbar -->
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#tab-map" data-theme="a" class="ui-btn-active" data-ajax="false" data-transition="slide">KARTE</a></li>
+					<li><a href="#tab-list" data-theme="a" data-ajax="false" data-transition="slide">LISTE</a></li>
+				</ul>
+			</div>
+			<!-- /END navbar -->
+
+			
+	        <!-- Tab:Map -->
+			<div id="tab-map" class="ui-content">
+				<div id="compassneedle"></div>	
+				<div id="map"></div>
+			</div>
+			<!-- /END Tab:Map -->
+
+			<!-- Tab:List -->
+			<div id="tab-list" class="ui-content">
+				<ul data-role="listview" data-filter="true" data-filter-placeholder="Stationen durchsuchen..." data-inset="true">
+				    <li ng-repeat="station in metaData.stationlist.station">
+				    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id, station.name)">
+				    		<h3>{{station.name}}</h3>
+				    		<p>{{station.city}} | {{station.frequency}} MHz</p>
+				    	</a>
+				    </li>
+				</ul>
+			</div>
+			<!-- /END Tab:List -->
+		</div>
+    </div>
+	<!-- /END Content -->
+	<!-- External:Popup -->
+	<div data-role="popup" data-theme="a" id="custom-popup" data-tolerance="0">
+        
+		<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left"></a> 
+        
+        <!-- hier stand Close -->
+		
+        <ul data-role="listview" data-inset="true" data-theme="a" data-divider-theme="a"> 
+            <li><a href="#" data-rel="back" id="searchitem_close"><img id="close-button-menu" src="img/00.4_icon_menu@1x.png"></a></li> 
+		    <li><a href="#page-search" id="searchitem_search">SUCHE</a></li> 
+		    <li><a href="#page-favorites" id="searchitem_favorites">FAVORITEN</a></li>
+		    <li><a href="#page-info" id="searchitem_info">INFO</a></li>
+		    <li><a href="#" id="searchitem_locating">ORTUNG</a></li>
+		    <li><a href="#page-schedule" id="searchitem_sendlist">SENDEPLAN</a></li>
+		</ul>
+	
+        
+ <!-- Controller, Bülent 02.11.14 
+    
+<div class="mejs-controls">
+            <div class="mejs-button mejs-playpause-button mejs-pause">
+                <button type="button" aria-controls="mep_0" title="Play/Pause" aria-label="Play/Pause">
+                </button>
+            </div>
+
+            <div class="mejs-button mejs-volume-button mejs-mute">
+                <button type="button" aria-controls="mep_0" title="Mute Toggle" aria-label="Mute Toggle">
+                </button>
+            </div>
+
+            <div class="mejs-horizontal-volume-slider mejs-mute">
+                <div class="mejs-horizontal-volume-total"></div>
+                <div class="mejs-horizontal-volume-current" style="width: 60px;"></div>
+                <div class="mejs-horizontal-volume-handle" style="left: 24px;"></div>
+            </div>
+        </div>
+
+ Controller, Bülent 02.11.14 -->       
+
+            
+        
+<!--  OLD
+		<br>
+
+		<label for="gpsstatus">Watch GPS:</label>
+		<select name="gpsstatus" id="gpsstatus" data-role="flipswitch" data-mini="true" >
+		  <option value="off" selected>Off</option>
+		  <option value="on">On</option>
+		</select>
+		<div id="gpsmessage"></div>
+		<br>
+		<label for="compassstatus">Watch Compass:</label>
+		<select data-role="flipswitch" name="compassstatus" id="compassstatus" data-mini="true" >
+			<option value="off" selected>Off</option>
+			<option value="on">On</option>		
+		</select>
+
+		<div id="compassmapstatusdiv">
+		<label for="compassmapstatus">Rotate Map:</label>
+		<select data-role="flipswitch" name="compassmapstatus" id="compassmapstatus" data-mini="true" >
+			<option value="off" selected>Off</option>
+			<option value="on">On</option>		
+		</select>
+		</div>
+		<br>
+		<fieldset data-role="controlgroup"  data-mini="true" >
+		  <legend>Layer:</legend>
+		  <input name="bglayer" id="mapquest" type="radio" value="0" checked>
+		  <label for="mapquest">OSM MapQuest</label>
+		  <input name="bglayer" id="osm" type="radio" value="1" >
+		  <label for="osm">OSM Standard</label>
+		  <input name="bglayer" id="openaereal" type="radio" value="2" >
+		  <label for="openaereal">MapQuest Open Aerial</label>
+		</fieldset> -->
+	</div>
+	<!-- /END External:Popup --> 
+</div>
+<!-- /END Page:Main -->
+
+<!-- Page:Detail -->
+<div data-role="page" id="page-detail" data-theme="a" ng-controller="StationDetailController">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3 ng-bind="selectedStationData.info.fullname">STATIONSNAME</h3>
+	    <a href="#page-main" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+	</div>
+	<!-- Content -->
+	<div id="detail-content" class="ui-content" data-role="main">
+		<span ng-if="noData" class="error">Fehler! Keine Senderdaten gefunden.</span>
+    <!-- Hack -->
+    <!-- <div ng-if="!noData"> -->
+			<div id="detail-tabs" class="navigation-tabs" data-role="tabs">
+				<!-- navbar -->
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#tab-detail-info" data-theme="a" class="ui-btn-active" data-ajax="false">INFO</a></li>
+						<li><a href="#tab-detail-program" data-theme="a" data-ajax="false">PROGRAMM</a></li>
+						<li><a href="#tab-detail-contact" data-theme="a" data-ajax="false">KKONTAKT</a></li>
+					</ul>
+				</div>
+				<!-- /END navbar -->
+
+				
+		        <!-- Tab:Info -->
+				<div id="tab-detail-info" class="ui-content">
+					<div class="ui-grid-a">
+						<div class="ui-block-a"><img ng-src="{{selectedStationData.station.info.logo._src}}"/></div>
+						<div class="ui-block-b">
+							{{selectedStationData.info.city}}<br/>
+							{{selectedStationData.mediaChannels.transmitter.frequency}} {{selectedStationData.mediaChannels.transmitter.frequencyunit}}
+						</div>
+					</div>
+					<div class="ui-body ui-body-a ui-corner-all">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					</div>
+				</div>
+				<!-- /END Tab:Info -->
+			    
+			    <!-- Tab:Programm -->
+				<div id="tab-detail-program" class="ui-content">
+					<ul data-role="listview" data-inset="true">
+						<li ng-repeat="broadcast in selectedStationData.programme">
+							<h4>{{broadcast.title}}</h4>
+						</li>
+					</ul>
+				</div>
+				<!-- /END Tab:Programm -->
+
+				<!-- Tab:Kontakt -->
+				<div id="tab-detail-contact" class="ui-content">
+					<div class="ui-body ui-body-a ui-corner-all">
+						<h4>B&uuml;ro und Studio</h4>
+						{{selectedStationData.info.fullname}}<br/>
+						{{selectedStationData.info.studio.street}} {{selectedStationData.info.studio.number}}<br/>
+						{{selectedStationData.info.studio.zip}} {{selectedStationData.info.studio.city}}<br/>
+					</div>
+					<div class="ui-body ui-body-a ui-corner-all">
+						<h4>&Ouml;ffnungszeiten</h4>
+						werktags {{selectedStationData.info.studio.open._timeFrom}} - {{selectedStationData.info.studio.open._timeTo}}
+					</div>
+					<div class="ui-body ui-body-a ui-corner-all">
+						<h4>Telefon</h4>
+						<div ng-repeat="phone in selectedStationData.info.studio.phone">
+							{{phone._type}} : {{phone.__text}}
+						</div>
+					</div>
+				</div>
+				<!-- /END Tab:Kontakt -->
+			</div>
+<!-- 		</div>  -->
+    </div>
+	<!-- /END Content -->
+</div>
+<!-- /END Page:Detail -->
+
+
+<!-- Page:Suche -->
+<div data-role="page" id="page-search" data-theme="a" ng-controller="SearchController">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3>SUCHE</h3>
+	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+        <div class="ui-btn-right"></div>
+	</div>
+	<div id="searchList" data-role="content">
+		<form>
+		     <input type="text" name="search-1" id="search-1" value="" ng-model="searchTerm">
+		</form>
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">SENDER</li>
+		    <li ng-repeat="station in metaData.stationlist.station | filter:searchTerm | orderBy:orderProp">
+		    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id, station.name)">
+		    		<h3>{{station.name}}</h3>
+		    		<p>{{station.city}} | {{station.frequency}} MHz</p>
+		    	</a>
+		    </li>
+		</ul>
+
+		<ul data-role="listview" data-inset="true">
+			<li data-role="list-divider">SENDUNG</li>
+		    <li ng-repeat="broadcast in stationData.stations | filter:searchTerm | orderBy:orderProp">
+		    	<a href="#">{{broadcast.station.programme.broadcast.title}}</a>
+		    </li>
+		</ul>
+	</div>
+</div>
+<!-- /END Page:Suche -->
+
+<!-- Page:Favoriten -->
+<div data-role="page" id="page-favorites" data-theme="a" ng-controller="FavoriteController">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3>FAVORITES</h3>
+	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+	</div>
+	<div data-role="content">
+		<span ng-if="noData" class="info">Sie haben noch keine Favoriten gespeichert.</span>
+		<div ng-if="!noData">
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider">SENDER</li>
+			    <li ng-repeat="station in favorites.stations">
+			    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id, station.name)">
+			    		<h3>{{station.name}}</h3>
+			    		<p>{{metaData.stationslist.station[station._id].station.city}} | {{metaData.stationslist.station[station._id].station.frequency}} MHz</p>
+			    	</a>
+			    </li>
+			</ul>
+
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider">SENDUNG</li>
+			    <li ng-repeat="broadcast in favorites.broadcasts">
+			    	<a href="#">{{broadcast.name}}</a>
+			    </li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- /END Page:Favoriten -->
+
+<!-- Page:Sendeplan -->
+<div data-role="page" id="page-schedule" data-theme="a" ng-controller="ScheduleController">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3>SENDEPLAN</h3>
+	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+	</div>
+	<div data-role="content">
+		<span ng-if="noData" class="error">Fehler! Es konnten keine Sendungen geladen werden.</span>
+		<div ng-if="!noData">
+			<form id="schedule-filters" name="filterCategories" method="post">
+				<!-- <fieldset data-role="controlgroup" data-type="horizontal" jquery-mobile-tpl>
+		 			<input ng-repeat-start="category in categories" type='checkbox' ng-model='categories[category._id]' name="category-{{category._id}}" id="category-{{category._id}}"/>
+		 			<label for="category-{{category._id}}" ng-repeat-end>{{category._name}}</label>
+				</fieldset> -->
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<input type="checkbox" name="category-0" id="category-0" ng-click="toggleSelection(0)" ng-checked="categories[0]._checked">
+			        <label for="category-0">Alternative</label>
+			        <input type="checkbox" name="category-1" id="category-1" ng-click="toggleSelection(1)" ng-checked="categories[1]._checked">
+			        <label for="category-1">Ambient</label>
+			        <input type="checkbox" name="category-2" id="category-2" ng-click="toggleSelection(2)" ng-checked="categories[2]._checked">
+			        <label for="category-2">Classical</label>
+			        <input type="checkbox" name="category-3" id="category-3" ng-click="toggleSelection(3)" ng-checked="categories[3]._checked">
+			        <label for="category-3">Country</label>
+			        <input type="checkbox" name="category-4" id="category-4" ng-click="toggleSelection(4)" ng-checked="categories[4]._checked">
+			        <label for="category-4">Dance</label>
+			        <input type="checkbox" name="category-5" id="category-5" ng-click="toggleSelection(5)" ng-checked="categories[5]._checked">
+			        <label for="category-5">Depp House</label>
+			        <input type="checkbox" name="category-6" id="category-6" ng-click="toggleSelection(6)" ng-checked="categories[6]._checked">
+			        <label for="category-6">Disco</label>
+			    </fieldset>
+			</form>
+			<ul data-role="listview" data-inset="true">
+		    	<li ng-repeat="broadcast in stationData.stations | categoryFilter:this | orderBy:orderProp">
+		    		<a href="#">{{broadcast.station.programme.broadcast.title}}</a>
+		    	</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- /END Page:Sendeplan -->
+
+ <!-- Page:Info -->
+<div data-role="page" id="page-info" data-theme="a">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3>INFO</h3>
+	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+        <div class="ui-btn-right"></div>
+	</div>
+	<div data-role="content">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id ..
+        
+        <!-- Spielplatz für Stream 
+
+<script>
+$( document ).ready(function() {
+	$('#player2').mediaelementplayer({alwaysShowControls: true, features: ['playpause','volume']});
+	(function worker() {
+	  $.ajax({
+	    url: 'http://www.freefm.de/npraw?ajax=1', 
+	    success: function(data) {
+	      $('#curprog').html(data);
+	    },
+	    complete: function() {
+	      // Schedule the next request when the current one's complete
+	      setTimeout(worker, 60000);
+	    }
+	  });
+	})();
+});
+</script>
+        <audio id="player2" src="http://stream.freefm.de:8100/;" type="audio/mp3" width="300" autoplay="false"></audio>
+        
+       Spielplatz für Stream -->
+        
+	</div>
+</div>
+<!-- /END Page:Info -->
+
+</div>
+</body>
+<!-- Scripts at end of page -->
+	<!-- Mapping -->
+	<script src="js/lib/ol3.js" ></script>
+	<script src="js/map.js" ></script>
+	<script src="js/compass.js" ></script>
+	<!-- /Mapping -->
+
+	<script src="js/freeradioapp.js"></script>
+	<script src="js/services.js"></script>
+	<script src="js/controllers.js"></script>
+<!-- /Scripts at end of page -->
+</html>

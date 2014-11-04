@@ -1,0 +1,18 @@
+{
+  "stations": [
+    {
+      "_id": "0",
+      "name": "Radio StHörfunk"
+    },
+    {
+      "_id": "1",
+      "name": "Free FM"
+    }
+  ],
+  "broadcasts": [
+    {
+      "_stationid": "0",
+      "name": "Testsendung"
+    }
+  ]
+}

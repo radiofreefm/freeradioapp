@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de" ng-app="FreeRadioApp">
+<head>
+	<metadata charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"><!-- Für die Webansicht dazugepustet -->
+	<meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
+	<link rel="stylesheet" href="css/jquery.mobile.min_custom.css" />
+	<link rel="stylesheet" href="css/ol3.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<script src="js/lib/lawnchair-0.6.1.min.js"></script>
+	<script src="js/lib/jquery.min.js"></script>
+	<script src="js/lib/jquery.mobile.min.js"></script>
+	<script src="js/lib/angular.min.js"></script>
+	<script src="js/lib/deferred-with-update.js"></script>
+	<script src="js/lib/xml2json.js"></script>
+	<title>free radio app</title>
+
+    <script >
+    var radioStream = new Audio('http://stream.freefm.de:8100/listen.pls');
+    var radioPlaying = false; 
+
+function RadioListenLive() 
+{
+ try 
+ {
+ if (radioPlaying)
+ {
+ radioStream.pause();
+ document.getElementById("radiotext").innerHTML = "Listen Live";
+ radioPlaying = false;
+ }
+ else
+ {
+ radioStream.play();
+ document.getElementById("radiotext").innerHTML = "Click to pause";
+ radioPlaying = true;
+ }
+ 
+ }
+ catch (e) 
+ {
+ alert(e.message);
+ }
+}
+    
+    </script>   
+        
+</head>
+
+<body ng-controller="AppController">
+<div data-role="page">
+ <div id="radioContent">
+ <div data-role="content">
+ <a data-role="button" onclick="RadioListenLive()">
+                              <div id="radiotext">Listen Live</div>
+                        </a>
+ </div>
+ </div>
+</div>
+
+</body>
+<!-- Scripts at end of page -->
+	<!-- Mapping -->
+	<script src="js/lib/ol3.js" ></script>
+	<script src="js/map.js" ></script>
+	<script src="js/compass.js" ></script>
+	<!-- /Mapping -->
+
+	<script src="js/freeradioapp.js"></script>
+	<script src="js/services.js"></script>
+	<script src="js/controllers.js"></script>
+<!-- /Scripts at end of page -->
+</html>

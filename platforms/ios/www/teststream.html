@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>free FM Live Stream</title>
+<script src="js/jquery.js"></script>
+<script src="js/mediaelement-and-player.min.js"></script>
+<link rel="stylesheet" href="css/mediaelementplayer.css" />
+<script>
+$( document ).ready(function() {
+	$('#player2').mediaelementplayer({alwaysShowControls: true, features: ['playpause','volume']});
+	(function worker() {
+	  $.ajax({
+	    url: 'http://www.freefm.de/npraw?ajax=1', 
+	    success: function(data) {
+	      $('#curprog').html(data);
+	    },
+	    complete: function() {
+	      // Schedule the next request when the current one's complete
+	      setTimeout(worker, 60000);
+	    }
+	  });
+	})();
+});
+</script>
+<style type="text/css">
+
+<!--
+
+-->
+    
+</style>
+</head>
+<body>
+<div id="header">Livestream</div>
+<audio id="player2" src="http://stream.freefm.de:8100/;" type="audio/mp3" width="300" autoplay="false"></audio>
+<p><strong id="curprogtitle">Jetzt läuft</strong><br/><span id="curprog">lade...</span></p>
+<hr width="300" />
+<p id="extlinks">
+	<span>Stream in externem Player &ouml;ffnen:</span>
+	<br/><strong><a href="http://stream.freefm.de:8100/listen.pls">als MP3 (160kbit)</a></strong>
+	<br/><span style="color:grey">als OGG (96 kbit)</span></a>
+</p> 
+</body>
+</html>

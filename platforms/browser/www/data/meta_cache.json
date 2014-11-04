@@ -1,0 +1,26 @@
+{
+  "freeradioapp": {
+    "_xmlns:gml": "http://www.opengis.net/gml",
+    "_lastupdate": "2013-08-21T15:07:38.6875000+02:00",
+    "stationlist": {
+      "station": [
+        {
+          "_lastupdate": "2013-08-21T15:07:38.6875000+02:00",
+          "_id": "0",
+          "name": "Radio StHörfunk",
+          "city": "Schwäbisch Hall",
+          "xmluri": "http://www.sthoerfunk.de/station.xml",
+          "frequency": "97.5"
+        },
+        {
+          "_lastupdate": "2013-08-21T15:07:38.6875000+02:00",
+          "_id": "1",
+          "name": "Free FM",
+          "city": "Ulm",
+          "xmluri": "http://www.freefm.de/station.xml",
+          "frequency": "126,4"
+        }
+      ]
+    }
+  }
+}

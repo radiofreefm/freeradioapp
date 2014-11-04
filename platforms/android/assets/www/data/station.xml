@@ -1,0 +1,1137 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>Fratzke, Sabine</Author>
+  <LastAuthor>B C</LastAuthor>
+  <TotalTime>0</TotalTime>
+  <Created>2014-10-02T08:46:21Z</Created>
+  <LastSaved>2014-10-14T09:17:37Z</LastSaved>
+  <Company>GIGATRONIK</Company>
+  <Version>12.0</Version>
+ </DocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <AllowPNG/>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>8080</WindowHeight>
+  <WindowWidth>19980</WindowWidth>
+  <WindowTopX>240</WindowTopX>
+  <WindowTopY>120</WindowTopY>
+  <TabRatio>600</TabRatio>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s16">
+   <Interior ss:Color="#FFF58C" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s17">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#000000"
+    ss:Bold="1"/>
+   <Interior ss:Color="#FFF58C" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s18">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#000000"
+    ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s19">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Interior ss:Color="#FFF58C" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s20">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+  </Style>
+  <Style ss:ID="s21">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <NumberFormat ss:Format="#,##0.000000"/>
+  </Style>
+  <Style ss:ID="s22">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <NumberFormat ss:Format="hh:mm:ss"/>
+  </Style>
+  <Style ss:ID="s23">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#000000"
+    ss:Bold="1"/>
+   <Interior ss:Color="#FFF58C" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s24">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Interior ss:Color="#99CCFF" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s25">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <NumberFormat ss:Format="Short Time"/>
+  </Style>
+  <Style ss:ID="s26">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#DD0806"/>
+  </Style>
+  <Style ss:ID="s27">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#000000"
+    ss:Italic="1"/>
+  </Style>
+  <Style ss:ID="s28">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="14.0" ss:Color="#000000"
+    ss:Bold="1"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s29">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="14.0" ss:Color="#000000"
+    ss:Bold="1"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s30">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="14.0" ss:Color="#000000"
+    ss:Bold="1"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s31">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#000000"
+    ss:Bold="1"/>
+   <Interior ss:Color="#99CCFF" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s32">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Interior ss:Color="#CCFFCC" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s35">
+   <Interior ss:Color="#CCFFCC" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s36">
+   <Interior ss:Color="#969696" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s38">
+   <Interior ss:Color="#4EE257" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s39">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Interior ss:Color="#4EE257" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s40">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#000000"
+    ss:Bold="1"/>
+   <Interior ss:Color="#4EE257" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s41">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Interior ss:Color="#4EE257" ss:Pattern="Solid"/>
+   <NumberFormat ss:Format="Short Time"/>
+  </Style>
+  <Style ss:ID="s42">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Interior ss:Color="#A2BD90" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s43">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#333333"
+    ss:Bold="1" ss:Italic="1"/>
+  </Style>
+  <Style ss:ID="s44">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Interior ss:Color="#CCFFCC" ss:Pattern="Solid"/>
+   <NumberFormat ss:Format="#,##0"/>
+  </Style>
+  <Style ss:ID="s45">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#000000"
+    ss:Bold="1"/>
+   <Interior ss:Color="#CCFFCC" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s46">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#000000"
+    ss:Bold="1"/>
+   <Interior ss:Color="#CCFFCC" ss:Pattern="Solid"/>
+   <NumberFormat ss:Format="hh:mm:ss"/>
+  </Style>
+  <Style ss:ID="s47">
+   <Interior ss:Color="#CCFFCC" ss:Pattern="Solid"/>
+   <NumberFormat ss:Format="hh:mm:ss"/>
+  </Style>
+  <Style ss:ID="s48">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Interior ss:Color="#CCFFCC" ss:Pattern="Solid"/>
+   <NumberFormat ss:Format="hh:mm:ss"/>
+  </Style>
+  <Style ss:ID="s49">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#000000"
+    ss:Bold="1"/>
+   <Interior ss:Color="#90713A" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s50">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Interior ss:Color="#90713A" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s51">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#333333"/>
+   <Interior ss:Color="#1FB714" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s54">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#008080"
+    ss:Bold="1" ss:Italic="1"/>
+  </Style>
+  <Style ss:ID="s55">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center" ss:WrapText="1"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#008080"
+    ss:Italic="1"/>
+   <Interior ss:Color="#4EE257" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s57">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Center"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11.0" ss:Color="#000000"
+    ss:Italic="1"/>
+  </Style>
+  <Style ss:ID="s58">
+   <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Color="#000000"/>
+   <Interior ss:Color="#FFF58C" ss:Pattern="Solid"/>
+  </Style>
+ </Styles>
+ <Names>
+  <NamedRange ss:Name="Genre" ss:RefersTo="=Genre!R1C1:R13C3"/>
+ </Names>
+ <Worksheet ss:Name="Station XML generieren">
+  <Names>
+   <NamedRange ss:Name="_FilterDatabase"
+    ss:RefersTo="='Station XML generieren'!R18C1:R149C1" ss:Hidden="1"/>
+  </Names>
+  <Table ss:ExpandedColumnCount="7" ss:ExpandedRowCount="136" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="65.0" ss:DefaultRowHeight="14.0">
+   <Column ss:AutoFitWidth="0" ss:Width="222.0"/>
+   <Column ss:StyleID="s20" ss:AutoFitWidth="0" ss:Width="456.0"/>
+   <Column ss:AutoFitWidth="0" ss:Width="309.0"/>
+   <Row ss:StyleID="s16">
+    <Cell ss:StyleID="s17"><Data ss:Type="String">Info</Data></Cell>
+    <Cell ss:StyleID="s19"/>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">angezeigter Name des Senders</Data></Cell>
+    <Cell><Data ss:Type="String">Radio free FM</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String"> Name des Lizenzträgers</Data></Cell>
+    <Cell><Data ss:Type="String">Radio free FM gGmbH</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">URL des Logo</Data></Cell>
+    <Cell><Data ss:Type="String">http://freefm.de/radioapp_logo.png</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">gewünschte Farbe in Hexcode</Data></Cell>
+    <Cell><Data ss:Type="String">#FF6600</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Ausstrahlungsort(e)</Data></Cell>
+    <Cell><Data ss:Type="String">Ulm</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">falls mehrere einfach Zeilen kopieren</Data></Cell>
+    <Cell ss:Index="5" ss:StyleID="s26"/>
+   </Row>
+   <Row ss:StyleID="s16">
+    <Cell ss:StyleID="s17"><Data ss:Type="String">Studioadresse</Data></Cell>
+    <Cell ss:StyleID="s19"/>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Strasse</Data></Cell>
+    <Cell><Data ss:Type="String">Platzgasse</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Hausnummer</Data></Cell>
+    <Cell><Data ss:Type="Number">18.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Stadt</Data></Cell>
+    <Cell><Data ss:Type="String">ulm</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">PLZ</Data></Cell>
+    <Cell><Data ss:Type="Number">89077.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Ortskoordinate geografische Breite</Data></Cell>
+    <Cell ss:StyleID="s21"><Data ss:Type="Number">48.400608</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Ortskoordinate geografische Länge</Data></Cell>
+    <Cell ss:StyleID="s21"><Data ss:Type="Number">9.991118999999999</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Studiotelefon</Data></Cell>
+    <Cell><Data ss:Type="String">+49 731 938 62 99</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Bürotelefon</Data></Cell>
+    <Cell><Data ss:Type="String">+49 731 938 62 84</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Studio Email</Data></Cell>
+    <Cell><Data ss:Type="String">studio@freefm.de</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Büro Email</Data></Cell>
+    <Cell><Data ss:Type="String">radio@freefm.de</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Öffnungszeiten von</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s22"><Data ss:Type="DateTime">1899-12-31T10:00:00.000</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="s57"><Data ss:Type="String">falls mehrere einfach Zeilen kopieren</Data></Cell>
+    <Cell ss:Index="5" ss:StyleID="s26"/>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Öffnungszeiten bis</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s22"><Data ss:Type="DateTime">1899-12-31T16:00:00.000</Data></Cell>
+   </Row>
+   <Row ss:StyleID="s17">
+    <Cell><Data ss:Type="String">Übertragungskanäle</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s23"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s49"><Data ss:Type="String">Kanal1</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s50"/>
+    <Cell ss:StyleID="s43"><Data ss:Type="String">falls mehrere einfach Zeilen kopieren</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Typ</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">UKW</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Frequenz</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="Number">102.6</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Einheiteinheit</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">MHz</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Senderstandort</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">Ermingen</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Senderstandort Geokooordinate Breite</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s44"><Data ss:Type="Number">4.8390347E7</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Senderstandort Geokooordinate Länge</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s44"><Data ss:Type="Number">9.895706E6</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Betreiber</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">MediaBroadcast</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Ausstrahlungsleistung</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="Number">1.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Ausstrahlungsleistung Einheit</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">kW</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">RDS ID</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">freeFM</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s51"><Data ss:Type="String">Übertragungszeiten</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s51"/>
+    <Cell ss:MergeDown="2" ss:StyleID="s57"><Data ss:Type="String">falls mehrere einfach Zeilen kopieren</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s45"><Data ss:Type="String">von</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s46"><Data ss:Type="String">bis</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s47"><Data ss:Type="DateTime">1899-12-31T00:00:00.000</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s48"><Data ss:Type="DateTime">1899-12-31T23:59:59.000</Data></Cell>
+    <Cell ss:Index="5" ss:StyleID="s26"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s49"><Data ss:Type="String">Kanal2</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s50"/>
+    <Cell ss:StyleID="s43"><Data ss:Type="String">falls mehrere einfach Zeilen kopieren</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Typ</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">Kabel</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Frequenz</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="Number">97.7</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Einheiteinheit</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">MHz</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Betreiber</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">KabelBW</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s51"><Data ss:Type="String">Übertragungszeiten</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s51"/>
+    <Cell ss:MergeDown="2" ss:StyleID="s57"><Data ss:Type="String">falls mehrere einfach Zeilen kopieren</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s45"><Data ss:Type="String">von</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s46"><Data ss:Type="String">bis</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s47"><Data ss:Type="DateTime">1899-12-31T00:00:00.000</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s48"><Data ss:Type="DateTime">1899-12-31T23:59:59.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s49"><Data ss:Type="String">Kanal3</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s50"/>
+    <Cell ss:StyleID="s43"><Data ss:Type="String">falls mehrere einfach Zeilen kopieren</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Typ</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">Kabel</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Frequenz</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="Number">93.45</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Einheiteinheit</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">MHz</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Betreiber</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">KabelBW</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s51"><Data ss:Type="String">Übertragungszeiten</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s51"/>
+    <Cell ss:MergeDown="2" ss:StyleID="s57"><Data ss:Type="String">falls mehrere einfach Zeilen kopieren</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s45"><Data ss:Type="String">von</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s46"><Data ss:Type="String">bis</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s47"><Data ss:Type="DateTime">1899-12-31T00:00:00.000</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s48"><Data ss:Type="DateTime">1899-12-31T23:59:59.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s49"><Data ss:Type="String">Kanal4</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s50"/>
+    <Cell ss:StyleID="s43"><Data ss:Type="String">falls mehrere einfach Zeilen kopieren</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Typ</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">Stream</Data></Cell>
+    <Cell ss:Index="5" ss:StyleID="s26"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">URL des Stream</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">http://stream.freefm.de:8100/listen.pls</Data></Cell>
+    <Cell ss:Index="5" ss:StyleID="s26"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Format</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">audio/mpeg</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">Qualität</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">160kbps</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s35"><Data ss:Type="String">URL der Website</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s32"><Data ss:Type="String">http://www.freefm.de</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s51"><Data ss:Type="String">Übertragungszeiten</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s51"/>
+    <Cell ss:MergeDown="2" ss:StyleID="s57"><Data ss:Type="String">falls mehrere einfach Zeilen kopieren</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s45"><Data ss:Type="String">von</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s46"><Data ss:Type="String">bis</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s47"><Data ss:Type="DateTime">1899-12-31T00:00:00.000</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s48"><Data ss:Type="DateTime">1899-12-31T23:59:59.000</Data></Cell>
+   </Row>
+   <Row ss:StyleID="s16">
+    <Cell ss:StyleID="s17"><Data ss:Type="String">Programm</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s19"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s31"><Data ss:Type="String">Sendung1</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s24"/>
+    <Cell ss:StyleID="s54"><Data ss:Type="String">für jede sendung einen Block kopieren</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Name der Sendung</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"><Data ss:Type="String">Testsendung</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Sendungsbeschreibung</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"><Data ss:Type="String">Existiert nicht wirklich, veranschaulicht nur die Wiederholungsregeln…</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Kategorie1</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s42"><Data ss:Type="String">Alternative</Data></Cell>
+    <Cell ss:MergeDown="2" ss:StyleID="s55"><Data ss:Type="String">maximal 3 pro Sendung, &#13;nur die vorgegebenen &#13;Erläuterunge siehe Blatt Genre</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Kategorie2</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s42"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Kategorie3</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s42"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">URL des Podcast-Feed</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"><Data ss:Type="String">http://freefm.de/url-zum-podcast</Data></Cell>
+   </Row>
+   <Row ss:StyleID="s16">
+    <Cell ss:StyleID="s40"><Data ss:Type="String">Übertragungszeit1</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Übertragungszeit von</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"><Data ss:Type="String">2013-08-21T15:00:00.000+02:00</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Übertragungszeit bis</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"><Data ss:Type="String">2013-08-21T17:00:00.000+02:00</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">ist das eine Wiederholung?</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell ss:Index="7" ss:StyleID="s26"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Ist das eine regelmäßige Ausstrahlung?</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell ss:Index="7" ss:StyleID="s26"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Wiederholungsrhytmus</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"/>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">nicht angeben bei Monatsorientierung s. u.</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">von</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s41"/>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">bis</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s41"/>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Priorität</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"/>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Wochentag</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"/>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">nicht angeben bei täglich</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Wochenwiederholung</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s38"/>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">2 = 14tägig, 4 = monatlich</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Startdatumm bei monatl.</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s38"/>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Invertiert</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">Auffüller für monatl. = findet 3 mal statt, dann 1 Aussetzer</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Gerade / Ungerade</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"/>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">nur angeben bei 14tägig</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Woche des Monats</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"/>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">nur angeben bei Monatswochenorientierung, Zeile kann auch mehrfach eingefügt werden</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Erste Woche des Monats</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">Spezielle Monatsorientierung</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s38"><Data ss:Type="String">Letzte Woche des Monats</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s39"><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">Spezielle Monatsorientierung</Data></Cell>
+   </Row>
+   <Row ss:Index="86" ss:AutoFitHeight="0" ss:Height="81.0" ss:StyleID="s16">
+    <Cell ss:MergeAcross="1" ss:StyleID="s58"><Data ss:Type="String">Grundregeln für die Angaben bei regelmäßiger Ausstrahlung: &#13;- es können mehrere Sendezeiten für eine Sendung angegeben werden.&#13;- am Besten Beispiele kopieren und anpassen.&#13;- Nicht-wiederkehrende Sendungstermine ueberschreiben wiederkehrende Sendungstermine grundsaetzlich&#13;- Wiederkehrende Sendungstermine werden in ihrer Prio abgearbeitet, wenn alle Prios gleich sind gewinnt bei Kollisionen nur ein Termin&#13;- Regeln werden NICHT auf Konsistenz geprueft, dies muss schon bei der Sendeplanerstellung geschehen</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:Height="24.0" ss:StyleID="s30">
+    <Cell ss:StyleID="s28"><Data ss:Type="String">BEISPIELE</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s29"/>
+   </Row>
+   <Row ss:StyleID="s16">
+    <Cell ss:StyleID="s17"><Data ss:Type="String">tägliche Sendung: Jeder Tag 17 - 19 Uhr</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s19"/>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wiederholungsrhytmus</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">täglich</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">von</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T17:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">bis</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T19:00:00.000</Data></Cell>
+   </Row>
+   <Row ss:StyleID="s16">
+    <Cell ss:StyleID="s17"><Data ss:Type="String">wöchentliche Sendungen: Jeden Montag 17 - 19 Uhr</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s19"/>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Priorität</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">0.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wiederholungsrhytmus</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">wöchentlich</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">von</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T17:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">bis</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T19:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochentag</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">MO</Data></Cell>
+   </Row>
+   <Row ss:StyleID="s16">
+    <Cell ss:StyleID="s17"><Data ss:Type="String">monatliche Sendungen, wochenorientiert: Alle 4 Wochen Freitags 17 - 19 Uhr, mit Startdatum</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s19"/>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Priorität</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">0.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochenwiederholung</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">wöchentlich</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochenrhytmus</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">4.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">von</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T17:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">bis</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T19:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Startdatum</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">2013-08-21T15:00:00.000+02:00</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochentag</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">FR</Data></Cell>
+   </Row>
+   <Row ss:StyleID="s16">
+    <Cell ss:StyleID="s17"><Data ss:Type="String">Gegenrhytmus zur monatliche Sendungen, wochenorientiert: findet Freitags 17 - 19 Uhr 3xstatt und hat dann einen Aussetzer, mit Startdatum</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s19"/>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Priorität</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">0.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochenwiederholung</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">wöchentlich</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochenrhytmus</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">4.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">von</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T17:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">bis</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T19:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Startdatum</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">2013-08-21T15:00:00.000+02:00</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochentag</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">FR</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Invertiert</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+   </Row>
+   <Row ss:StyleID="s16">
+    <Cell ss:StyleID="s17"><Data ss:Type="String">14tägige Sendung: Jede ungerade Woche Sonntag von 9 bis 10 Uhr</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s19"/>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Priorität</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">0.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochenwiederholung</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">wöchentlich</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochenrhytmus</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">2.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">von</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T09:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">bis</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T10:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochentag</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">SO</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Gerade / Ungerade</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">Ungerade</Data></Cell>
+   </Row>
+   <Row ss:StyleID="s16">
+    <Cell ss:StyleID="s17"><Data ss:Type="String">Monatsorientierte Sendung: Jede 1. und 4. Woche des Monats</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s19"/>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Priorität</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">0.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">von</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T09:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">bis</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T10:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochentag</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">SO</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Woche des Monats</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">1.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Woche des Monats</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">4.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s17"><Data ss:Type="String">Monatsorientierte Sendung: Jede ersteund letzte Woche des Monats</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s19"/>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Priorität</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Number">0.0</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">von</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T09:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">bis</Data><NamedCell ss:Name="_FilterDatabase"/></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="DateTime">1899-12-31T10:00:00.000</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Wochentag</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="String">SO</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Erste Woche des Monats</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Letzte Woche des Monats</Data><NamedCell
+      ss:Name="_FilterDatabase"/></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.787401575" x:Left="0.7" x:Right="0.7"
+     x:Top="0.787401575"/>
+   </PageSetup>
+   <Print>
+    <ValidPrinterInfo/>
+    <PaperSizeIndex>9</PaperSizeIndex>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>600</VerticalResolution>
+   </Print>
+   <TabColorIndex>53</TabColorIndex>
+   <PageLayoutZoom>100</PageLayoutZoom>
+   <Selected/>
+   <TopRowVisible>53</TopRowVisible>
+   <LeftColumnVisible>1</LeftColumnVisible>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>70</ActiveRow>
+     <ActiveCol>2</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+  <DataValidation xmlns="urn:schemas-microsoft-com:office:excel">
+   <Range>R22C2,R36C2,R44C2,R52C2</Range>
+   <Type>List</Type>
+   <CellRangeList/>
+   <Value>&quot;UKW,Kabel,Stream,DAB&quot;</Value>
+  </DataValidation>
+  <DataValidation xmlns="urn:schemas-microsoft-com:office:excel">
+   <Range>R88C2,R83C2:R85C2,R71C2:R72C2,R80C2,R92C2,R114C2,R135C2:R136C2</Range>
+   <Type>List</Type>
+   <CellRangeList/>
+   <Value>&quot;Wahr,Falsch&quot;</Value>
+  </DataValidation>
+  <DataValidation xmlns="urn:schemas-microsoft-com:office:excel">
+   <Range>R98C2,R106C2,R121C2,R127C2,R134C2</Range>
+   <Type>List</Type>
+   <CellRangeList/>
+   <Value>&quot;MO,DI,MI,DO,Fr,SA,SO&quot;</Value>
+  </DataValidation>
+  <DataValidation xmlns="urn:schemas-microsoft-com:office:excel">
+   <Range>R81C2,R122C2</Range>
+   <Type>List</Type>
+   <CellRangeList/>
+   <Value>&quot;Gerade,Ungerade&quot;</Value>
+  </DataValidation>
+  <DataValidation xmlns="urn:schemas-microsoft-com:office:excel">
+   <Range>R73C2,R94C2,R89C2,R100C2,R108C2,R117C2</Range>
+   <Type>List</Type>
+   <CellRangeList/>
+   <Value>&quot;täglich,wöchentlich&quot;</Value>
+  </DataValidation>
+  <DataValidation xmlns="urn:schemas-microsoft-com:office:excel">
+   <Range>R82C2,R128C2:R129C2</Range>
+   <Type>List</Type>
+   <CellRangeList/>
+   <Value>&quot;1,2,3,4,5&quot;</Value>
+  </DataValidation>
+  <DataValidation xmlns="urn:schemas-microsoft-com:office:excel">
+   <Range>R77C2,R97C2,R105C2,R113C2</Range>
+   <Type>List</Type>
+   <CellRangeList/>
+   <Value>&quot;MO,DI,MI,DO,FR,SA,SO&quot;</Value>
+  </DataValidation>
+ </Worksheet>
+ <Worksheet ss:Name="ALLG. ANGABEN FÜR DIE APP">
+  <Table ss:ExpandedColumnCount="2" ss:ExpandedRowCount="8" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="65.0" ss:DefaultRowHeight="14.0">
+   <Column ss:AutoFitWidth="0" ss:Width="236.0"/>
+   <Column ss:AutoFitWidth="0" ss:Width="165.0"/>
+   <Row>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">Ansprechpartner Homepage Server</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Vorname</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Name</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Telefon</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Email-Adresse</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Erreichbarkeit</Data></Cell>
+   </Row>
+   <Row ss:Index="8">
+    <Cell ss:StyleID="s18"><Data ss:Type="String">URL für die Ablage der Station XML</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.787401575" x:Left="0.7" x:Right="0.7"
+     x:Top="0.787401575"/>
+   </PageSetup>
+   <Print>
+    <ValidPrinterInfo/>
+    <PaperSizeIndex>9</PaperSizeIndex>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>600</VerticalResolution>
+   </Print>
+   <TabColorIndex>50</TabColorIndex>
+   <PageLayoutZoom>0</PageLayoutZoom>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>8</ActiveRow>
+     <ActiveCol>1</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="Genre">
+  <Table ss:ExpandedColumnCount="3" ss:ExpandedRowCount="17" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="65.0" ss:DefaultRowHeight="14.0">
+   <Column ss:AutoFitWidth="0" ss:Width="33.0"/>
+   <Column ss:AutoFitWidth="0" ss:Width="141.0"/>
+   <Column ss:AutoFitWidth="0" ss:Width="370.0"/>
+   <Row>
+    <Cell ss:StyleID="s36"><Data ss:Type="String">Nr</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="String">Titel</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s36"><Data ss:Type="String">beinhaltet</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">1.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">Alternative</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+    <Cell><Data ss:Type="String">rock/punk/grunge/metal / blues /soul/beat / country</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">2.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">Elektronika</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+    <Cell><Data ss:Type="String">House/Techno/Elektro/Drum´n´Bass...</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">3.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">HipHop</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">4.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">Jazz</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">5.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">Klassik</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">6.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">Reagge</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">7.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">R'n'B / Black</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">8.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">Singer-Songwriter</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">9.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">U-Musi &amp; Schlager</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+    <Cell><Data ss:Type="String">Volkstümliche Musik, Orchester, James Last, Bert Kämpfert</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">10.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">Volksmusik</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+    <Cell><Data ss:Type="String">originale Volksmusik, Bänkelsang, Guggenmusi, Jodeln, Blasmusik</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">11.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">World</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="Number">12.0</Data><NamedCell ss:Name="Genre"/></Cell>
+    <Cell ss:StyleID="s18"><Data ss:Type="String">Wort</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+    <Cell><Data ss:Type="String">Talk / Satire / Sport / Info</Data><NamedCell
+      ss:Name="Genre"/></Cell>
+   </Row>
+   <Row ss:Index="15">
+    <Cell ss:StyleID="s27"><Data ss:Type="String">wir werden vorerst diese Genre benutzen - Erläuterungen folgen auf BfR Kongress</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">Falls jemand wirklich gar nicht agebildet ist, dann bitte hier Vorschläge posten</Data></Cell>
+   </Row>
+   <Row>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">Vorschläge:</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.787401575" x:Left="0.7" x:Right="0.7"
+     x:Top="0.787401575"/>
+   </PageSetup>
+   <Print>
+    <ValidPrinterInfo/>
+    <PaperSizeIndex>9</PaperSizeIndex>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>600</VerticalResolution>
+   </Print>
+   <PageLayoutZoom>0</PageLayoutZoom>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>11</ActiveRow>
+     <ActiveCol>2</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+  <Sorting xmlns="urn:schemas-microsoft-com:office:excel">
+   <Sort>Spalte B</Sort>
+  </Sorting>
+ </Worksheet>
+</Workbook>

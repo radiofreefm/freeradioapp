@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html lang="de" ng-app="FreeRadioApp">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/jquery.mobile.min.css" />
+	<link rel="stylesheet" href="css/ol3.css" type="text/css">
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<script src="js/lib/cordova-2.4.0.js"></script>
+	<script src="js/lib/jquery.min.js"></script>
+	<script src="js/lib/jquery.mobile.min.js"></script>
+	<script src="js/lib/angular.min.js"></script>
+	<script src="js/lib/xml2json.js"></script>
+	<title>free radio app</title>
+</head>
+<body>
+
+<!-- External:Header -->
+<div id="head" data-theme="a" data-role="header" data-position="fixed">
+    <h3>Freie Radios</h3>
+    <a href="#nav-popup" data-icon="bars" data-rel="popup" data-transition="slidedown" data-iconpos="notext" class="ui-btn-left" data-theme="a">Menu</a>
+    <!-- <a href="#page-info" data-rel="page" data-icon="info" data-transition="slidefade"  data-iconpos="notext">Info</a> -->
+</div>
+<!-- /END External:Header -->
+
+<!-- External:Popup -->
+<div data-role="popup" data-theme="a" id="nav-popup">
+	<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+	<ul data-role="listview" data-inset="true" data-theme="a" data-divider-theme="a">
+	    <li><a href="#">Suche </a></li>
+	    <li><a href="#page-favorites">Favoriten</a></li>
+	    <li><a href="#page-info">Info</a></li>
+	    <li><a href="#">Ortung</a></li>
+	    <li><a href="#">Sendeplan</a></li>
+	</ul>
+<!--  OLD
+	<br>
+
+	<label for="gpsstatus">Watch GPS:</label>
+	<select name="gpsstatus" id="gpsstatus" data-role="flipswitch" data-mini="true" >
+	  <option value="off" selected>Off</option>
+	  <option value="on">On</option>
+	</select>
+	<div id="gpsmessage"></div>
+	<br>
+	<label for="compassstatus">Watch Compass:</label>
+	<select data-role="flipswitch" name="compassstatus" id="compassstatus" data-mini="true" >
+		<option value="off" selected>Off</option>
+		<option value="on">On</option>		
+	</select>
+
+	<div id="compassmapstatusdiv">
+	<label for="compassmapstatus">Rotate Map:</label>
+	<select data-role="flipswitch" name="compassmapstatus" id="compassmapstatus" data-mini="true" >
+		<option value="off" selected>Off</option>
+		<option value="on">On</option>		
+	</select>
+	</div>
+	<br>
+	<fieldset data-role="controlgroup"  data-mini="true" >
+	  <legend>Layer:</legend>
+	  <input name="bglayer" id="mapquest" type="radio" value="0" checked>
+	  <label for="mapquest">OSM MapQuest</label>
+	  <input name="bglayer" id="osm" type="radio" value="1" >
+	  <label for="osm">OSM Standard</label>
+	  <input name="bglayer" id="openaereal" type="radio" value="2" >
+	  <label for="openaereal">MapQuest Open Aerial</label>
+	</fieldset> -->
+</div>
+<!-- /END External:Popup --> 
+
+<!-- Page:Main -->
+<div data-role="page" id="page-main" data-theme="a" ng-controller="MetaController">
+	<!-- Content -->
+	<div id="main-content" data-role="main">
+		<div id="main-tabs" class="navigation-tabs" data-role="tabs">
+			<!-- navbar -->
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#tab-map" data-theme="a" class="ui-btn-active" data-ajax="false" data-transition="slide">Karte</a></li>
+					<li><a href="#tab-list" data-theme="a" data-ajax="false" data-transition="slide">Liste</a></li>
+				</ul>
+			</div>
+			<!-- /END navbar -->
+
+			
+	        <!-- Tab:Map -->
+			<div id="tab-map" class="ui-content">
+				<div id="compassneedle"></div>	
+				<div id="map"></div>
+			</div>
+			<!-- /END Tab:Map -->
+
+			<!-- Tab:List -->
+			<div id="tab-list" class="ui-content">
+				<ul data-role="listview" data-filter="true" data-filter-placeholder="Search stations..." data-inset="true">
+				    <li ng-repeat="station in meta.stationlist.station">
+				    	<a href="#page-detail" data-transition="slidefade" ng-click="handleStationSelect(station._id, station.name)">
+				    		<h3>{{station.name}}</h3>
+				    		<p>{{station.city}} | {{station.frequency}} MHz</p>
+				    	</a>
+				    </li>
+				</ul>
+			</div>
+			<!-- /END Tab:List -->
+		</div>
+    </div>
+	<!-- /END Content -->
+</div>
+<!-- /END Page:Main -->
+
+<!-- Page:Detail -->
+<div data-role="page" id="page-detail" data-theme="a"  ng-controller="StationController">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3 ng-bind="stationdata.info.fullname">Stationsname</h3>
+	    <a href="#page-main" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+	</div>
+	<!-- Content -->
+	<div id="detail-content" class="ui-content" data-role="main">
+		<div id="detail-tabs" class="navigation-tabs" data-role="tabs">
+			<!-- navbar -->
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#tab-detail-info" data-theme="a" class="ui-btn-active" data-ajax="false">Info</a></li>
+					<li><a href="#tab-detail-program" data-theme="a" data-ajax="false">Programm</a></li>
+					<li><a href="#tab-detail-contact" data-theme="a" data-ajax="false">Kontakt</a></li>
+				</ul>
+			</div>
+			<!-- /END navbar -->
+
+			
+	        <!-- Tab:Info -->
+			<div id="tab-detail-info" class="ui-content">
+				<div class="ui-grid-a">
+					<div class="ui-block-a"><img ng-src="{{stationdata.station.info.logo._src}}"/></div>
+					<div class="ui-block-b">
+						{{stationdata.info.city}}<br/>
+						{{stationdata.mediaChannels.transmitter.frequency}} {{stationdata.mediaChannels.transmitter.frequencyunit}}
+					</div>
+				</div>
+				<div class="ui-body ui-body-a ui-corner-all">
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</div>
+			</div>
+			<!-- /END Tab:Info -->
+		    
+		    <!-- Tab:Liste -->
+			<div id="tab-detail-program" class="ui-content">
+				<!-- <div ng-repeat="">
+				</div> -->
+			</div>
+			<!-- /END Tab:Liste -->
+
+			<!-- Tab:Kontakt -->
+			<div id="tab-detail-contact" class="ui-content">
+				<div class="ui-body ui-body-a ui-corner-all">
+					<h4>B&uuml;ro und Studio</h4>
+					{{stationdata.info.fullname}}<br/>
+					{{stationdata.info.studio.street}} {{stationdata.info.studio.number}}<br/>
+					{{stationdata.info.studio.zip}} {{stationdata.info.studio.city}}<br/>
+				</div>
+				<div class="ui-body ui-body-a ui-corner-all">
+					<h4>&Ouml;ffnungszeiten</h4>
+					werktags {{stationdata.info.studio.open["_time-from"]}} - {{stationdata.info.studio.open["_time-to"]}}
+				</div>
+				<div class="ui-body ui-body-a ui-corner-all">
+					<h4>Telefon</h4>
+					<div ng-repeat="phone in stationdata.info.studio.phone">
+						{{phone._type}} : {{phone.__text}}
+					</div>
+				</div>
+			</div>
+			<!-- /END Tab:Kontakt -->
+		</div>
+    </div>
+	<!-- /END Content -->
+</div>
+<!-- /END Page:Detail -->
+
+ <!-- Page:Favoriten -->
+<div data-role="page" id="page-favorites" data-theme="a">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3>Favorites</h3>
+	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+	</div>
+	<div data-role="content">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+</div>
+<!-- /END Page:Favoriten -->
+
+ <!-- Page:Favoriten -->
+<div data-role="page" id="page-info" data-theme="a">
+	<div id="head" data-theme="a" data-role="header" data-position="fixed">
+	    <h3>Info</h3>
+	    <a href="#" data-icon="carat-l" data-iconpos="notext" data-rel="back" data-theme="a">Zur&uuml;ck</a>
+	</div>
+	<div data-role="content">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+</div>
+<!-- /END Page:Favoriten -->
+
+</div>
+</body>
+<!-- Scripts at end of page -->
+	<!-- Mapping -->
+	<script src="js/lib/ol3.js" ></script>
+	<script src="js/map.js" ></script>
+	<script src="js/compass.js" ></script>
+	<!-- /Mapping -->
+
+	<script src="js/freeradioapp.js"></script>
+	<script src="js/services.js"></script>
+	<script src="js/controllers.js"></script>
+<!-- /Scripts at end of page -->
+</html>

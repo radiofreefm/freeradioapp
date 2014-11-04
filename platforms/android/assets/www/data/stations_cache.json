@@ -1,0 +1,194 @@
+{
+    "stations": {
+        "Radio StH\u00f6rfunk": {
+            "station": {
+                "_lastupdate": "2013-08-21T15:07:38.6875000+02:00",
+                "_xmlns:gml": "http://www.opengis.net/gml",
+                "info": {
+                    "basecolor": "#FF6600",
+                    "city": "Schw\u00e4bisch Hall",
+                    "displayname": "StH\u00f6rfunk",
+                    "fullname": "Radio StH\u00f6rfunk",
+                    "logo": {
+                        "-src": "http://sthoerfunk.de/radioapp_logo.png"
+                    },
+                    "studio": {
+                        "city": "Schw\u00e4bisch Hall",
+                        "email": [
+                            {
+                                "__text": "info@sthoerfunk.de",
+                                "_type": "studio"
+                            },
+                            {
+                                "__text": "info@sthoerfunk.de",
+                                "_type": "office"
+                            }
+                        ],
+                        "number": "9",
+                        "open": {
+                            "_timeFrom": "00:00:00",
+                            "_timeTo": "23:59:59"
+                        },
+                        "phone": [
+                            {
+                                "__text": "+49 791 973333",
+                                "_type": "studio"
+                            },
+                            {
+                                "__text": "+49 791 973344",
+                                "_type": "office"
+                            }
+                        ],
+                        "street": "Haalstra\u00dfe",
+                        "studio-location": {
+                            "gml:Point": {
+                                "gml:pos": "49.111685 9.736074"
+                            }
+                        },
+                        "zip": "74523"
+                    }
+                },
+                "mediaChannels": {
+                    "transmitter": {
+                        "_type": "ukw",
+                        "city": "Schw\u00e4bisch Hall",
+                        "frequency": "97.5",
+                        "frequencyunit": "MHz",
+                        "operator": "MediaBroadcast",
+                        "receptionarea": {
+                            "gml:Polygon": {
+                                "gml:exterior": {
+                                    "gml:LinearRing": {
+                                        "gml:posList": "48.50387 9.74213 48.34472 9.74213 48.18565 9.73938 48.04354 9.77783 48.01047 9.85886 48.03068 10.06897 48.09585 10.40543 48.25336 10.61005 48.4514 10.80917 48.68075 10.94513 48.69525 10.83252 48.72063 10.70068 48.57182 10.29968 48.50387 9.94812 48.50387 9.74213"
+                                    }
+                                }
+                            }
+                        },
+                        "transmitPower": "1",
+                        "transmitPowerUnit": "kW",
+                        "transmitRdsId": "freeFM",
+                        "transmitTimes": {
+                            "transmitTime": {
+                                "_timeFrom": "00:00:00",
+                                "_timeTo": "23:59:59"
+                            }
+                        },
+                        "transmitterLocation": {
+                            "gml:Point": {
+                                "gml:pos": "49.111685 9.736074"
+                            }
+                        }
+                    },
+                    "website": {
+                        "url": "http://www.sthoerfunk.de"
+                    },
+                    "webstream": {
+                        "format": "audio/ogg",
+                        "quality": "128kbps",
+                        "transmitTimes": {
+                            "transmitTime": {
+                                "_timeFrom": "00:00:00",
+                                "_timeTo": "23:59:59"
+                            }
+                        },
+                        "url": "http://stream.sthoerfunk.de:7000/sthoerfunk.ogg"
+                    }
+                },
+                "programme": {
+                    "broadcast": {
+                        "_id": "1",
+                        "categories": {
+                            "category": [
+                                {
+                                    "_id": "1",
+                                    "_name": "Ambient"
+                                },
+                                {
+                                    "_id": "245",
+                                    "_name": "Alternative"
+                                }
+                            ]
+                        },
+                        "description": "Existiert nicht wirklich, veranschaulicht nur die Wiederholungsregeln...",
+                        "feed": {
+                            "title": "Podcast-Feed",
+                            "url": "http://freefm.de/url-zum-podcast"
+                        },
+                        "title": "Testsendung",
+                        "transmitTimes": {
+                            "transmitTime": [
+                                {
+                                    "_dateFrom": "2013-08-21T15:00:00.000+02:00",
+                                    "_dateTo": "2013-08-21T17:00:00.000+02:00",
+                                    "_recurrence": "false",
+                                    "_rerun": "false"
+                                },
+                                {
+                                    "_recurrence": "true",
+                                    "daily": {
+                                        "_timeFrom": "17:00:00",
+                                        "_timeTo": "19:00:00"
+                                    },
+                                    "weekOfMonth": [
+                                        {
+                                            "_day": "MI",
+                                            "_priority": "0",
+                                            "_timeFrom": "17:00:00",
+                                            "_timeTo": "19:00:00",
+                                            "_week1": "true",
+                                            "_week2": "false",
+                                            "_week3": "false",
+                                            "_week4": "true",
+                                            "_week5": "false"
+                                        },
+                                        {
+                                            "_day": "DI",
+                                            "_firstWeek": "true",
+                                            "_lastWeek": "true",
+                                            "_priority": "0",
+                                            "_timeFrom": "17:00:00",
+                                            "_timeTo": "19:00:00"
+                                        }
+                                    ],
+                                    "weekly": [
+                                        {
+                                            "_day": "MO",
+                                            "_priority": "0",
+                                            "_timeFrom": "17:00:00",
+                                            "_timeTo": "19:00:00"
+                                        },
+                                        {
+                                            "_dateFrom": "2013-08-21T15:00:00.000+02:00",
+                                            "_day": "FR",
+                                            "_priority": "0",
+                                            "_timeFrom": "17:00:00",
+                                            "_timeTo": "19:00:00",
+                                            "_weekFrequency": "4"
+                                        },
+                                        {
+                                            "_dateFrom": "2013-08-21T15:00:00.000+02:00",
+                                            "_day": "SO",
+                                            "_invert": "true",
+                                            "_priority": "0",
+                                            "_timeFrom": "17:00:00",
+                                            "_timeTo": "19:00:00",
+                                            "_weekFrequency": "4"
+                                        },
+                                        {
+                                            "_day": "DO",
+                                            "_oddEvenWeekNbr": "odd",
+                                            "_priority": "0",
+                                            "_timeFrom": "17:00:00",
+                                            "_timeTo": "19:00:00",
+                                            "_weekFrequency": "2"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<station lastupdate="2013-08-21T15:07:38.6875000+02:00" xmlns:gml="http://www.opengis.net/gml">
+	<info>
+		<displayname>free FM</displayname>
+		<fullname>Radio free FM</fullname>
+		<logo src="http://sthoerfunk.de/radioapp_logo.png" />
+		<basecolor>#FF6600</basecolor>
+		<city>Ulm</city>	
+		<studio>
+			<street>Haalstraße</street>
+			<number>9</number>
+			<city>Ulm</city>
+			<zip>74523</zip>
+			<studio-location>	
+				<gml:Point>
+					<gml:pos>49.111685 9.736074</gml:pos>
+				</gml:Point>
+			</studio-location>
+			<phone type="studio">+49 791 973333</phone>
+			<phone type="office">+49 791 973344</phone>
+			<email type="studio">info@sthoerfunk.de</email>
+			<email type="office">info@sthoerfunk.de</email>
+			<open time-from="00:00:00" time-to="23:59:59" />
+		</studio>
+	</info>
+	<media-channels>
+		<transmitter type="ukw">
+			<frequency>126,4</frequency>
+			<frequencyunit>MHz</frequencyunit>
+			<city>Ulm</city>
+			<operator>MediaBroadcast</operator>
+			<transmit-power>1</transmit-power>
+			<transmit-power-unit>kW</transmit-power-unit>
+			<transmit-rds-id>freeFM</transmit-rds-id>
+			<transmit-times>
+				<transmit-time time-from="00:00:00" time-to="23:59:59" />
+			</transmit-times>
+			<transmitter-location>
+				<gml:Point>
+					<gml:pos>49.111685 9.736074</gml:pos>
+				</gml:Point>
+			</transmitter-location>
+			<receptionarea>
+			  <gml:Polygon>
+				 <gml:exterior>
+					<gml:LinearRing>
+					   <gml:posList>
+							48.50387 9.74213 48.34472 9.74213 48.18565 9.73938 48.04354 9.77783 48.01047 9.85886 48.03068 10.06897 48.09585 10.40543 48.25336 10.61005 48.4514 10.80917 48.68075 10.94513 48.69525 10.83252 48.72063 10.70068 48.57182 10.29968 48.50387 9.94812 48.50387 9.74213
+					   </gml:posList>
+					</gml:LinearRing>
+				 </gml:exterior>
+			  </gml:Polygon>
+		   </receptionarea>
+		</transmitter>
+		<webstream>
+			<transmit-times>
+				<transmit-time time-from="00:00:00" time-to="23:59:59" />
+			</transmit-times>
+			<url>http://stream.sthoerfunk.de:7000/sthoerfunk.ogg</url>
+			<format>audio/ogg</format>
+			<quality>128kbps</quality>
+		</webstream>
+		<website>
+			<url>http://www.sthoerfunk.de</url>
+		</website>
+	</media-channels>
+	<programme>
+		<broadcast id="1">
+			<title>Testsendung</title>
+			<description>Existiert nicht wirklich, veranschaulicht nur die Wiederholungsregeln...</description>
+			<categories>
+				<category name="Wort" id="1" />
+				<category name="Experimental" id="245" />
+			</categories>
+			<feed>
+				<title>Podcast-Feed</title>
+				<url>http://freefm.de/url-zum-podcast</url>
+			</feed>
+			<transmit-times>
+				<!--- Grundregeln: 
+				- Nicht-wiederkehrende Sendungstermine Ã¼berschreiben wiederkehrende Sendungstermine grundsÃ¤tzlich
+				- Wiederkehrende Sendungstermine werden in ihrer Prio abgearbeitet, wenn alle Prios gleich sind gewinnt bei Kollisionen nur ein Termin
+				- Regeln werden NICHT auf Konsistenz geprÃ¼ft, dies muss schon bei der Sendeplanerstellung geschehen
+				- Recurrence vs. Rerun: Ersteres definiert die zeitlichen Wiederholungsregeln, zweiteres die inhaltlichen 
+				  (Ist die Sendung an jedem Termin live, oder sind alle Termine ausser dem ersten nur reine Wiederholungen (des zuletzt live gesendeten Termins)) -->
+				<transmit-time date-from="2013-08-21T15:00:00.000+02:00" date-to="2013-08-21T17:00:00.000+02:00" recurrence="false" rerun="false" />
+				<transmit-time recurrence="true">
+					<!--- Jeden Tag von 17 bis 19 Uhr -->
+					<daily time-from="17:00:00" time-to="19:00:00" />
+					<!--- Jede Woche Montags von 17 bis 19 Uhr -->
+					<weekly day="MO" priority="0" time-from="17:00:00" time-to="19:00:00" />
+					<!--- Alle 4 Wochen Freitags von 17 bis 19 Uhr, mit Startdatum -->
+					<weekly day="FR" priority="0" time-from="17:00:00" time-to="19:00:00" weekFrequency="4" date-from="2013-08-21T15:00:00.000+02:00" />
+					<!--- Sonntags von 17 bis 19 Uhr, mit Startdatum, in den drei Wochen in denen das Gegenereignis nicht stattfindet -->
+					<weekly day="SO" priority="0" time-from="17:00:00" time-to="19:00:00" weekFrequency="4" date-from="2013-08-21T15:00:00.000+02:00" invert="true" />
+					<!--- Jede ungerade Woche Freitags von 17 bis 19 Uhr, mit OddEven -->
+					<weekly day="DO" priority="0" time-from="17:00:00" time-to="19:00:00" weekFrequency="2" oddEvenWeekNbr="odd" />
+					<!--- Jede 1. und 4. Woche des Monats am Mittwoch -->
+					<weekOfMonth day="MI" priority="0" time-from="17:00:00" time-to="19:00:00" week1="true" week2="false" week3="false" week4="true" week5="false" />
+					<!--- Jeden letzten und ersten Dienstag im Monat -->
+					<weekOfMonth day="DI" priority="0" time-from="17:00:00" time-to="19:00:00" lastWeek="true" firstWeek="true" /> 
+				</transmit-time>
+			</transmit-times>
+		</broadcast>
+	</programme>
+</station>

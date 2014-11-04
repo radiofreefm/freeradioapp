@@ -1,0 +1,203 @@
+@font-face {
+    font-family: "SciFly";
+    src: url("../fonts/SciFly-Sans.ttf") format("opentype");   
+}
+
+@font-face {
+    font-family: "SourceSansPro";
+    src: url("../fonts/SourceSansPro-Bold.ttf") format("opentype");   
+}
+
+html ,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+	overflow-x:hidden;
+    
+}
+
+
+#map {
+	width:100%;
+	height:100%;
+}
+
+.ui-content{
+	padding:0px;
+    color: white;
+}
+
+.ol-attribution {
+    max-width: 50%;
+}
+
+.gpspoint{
+    font-size: 10px;
+	background:url(images/gpspoint.png);
+	width:16px;
+	height:16px;
+	z-index:1200;
+	position:absolute;
+}
+
+#gpsmessage{
+	margin:0px;
+	padding:0px;
+}
+
+#gpsmessagebox{
+	font-size:11px;
+	color:#036;
+}
+
+#infomessagebox{
+	font-size:11px;
+	color:#036;
+}
+
+
+#compassneedle {
+	position:absolute;
+	top:16px;
+	right:26px;
+    background:url(../img/needle.png);
+    width:20px;
+    height:50px;
+    z-index:1100;
+}
+
+#compassinfo {
+    color: black;
+    width:90px;
+	height:20px;
+	background-color:#CCC;
+}
+
+#nav-panel.ui-panel {
+    width: 5em;
+}
+#nav-panel.ui-panel-closed {
+    width: 0;
+}
+
+
+/********************************************* 
+ * jQuery Mobile Edits
+ *********************************************/
+
+.navigation-tabs {
+    padding: 0;
+}
+
+.ui-panel-position-left.ui-panel-display-reveal {
+    left: 0;
+}
+.ui-panel-content-wrap-position-left.ui-panel-content-wrap-open,
+.ui-panel-dismiss-position-left.ui-panel-dismiss-open {
+    left: 15em;
+    right: -15em;
+}
+.ui-panel-animate.ui-panel-content-wrap-position-left.ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal {
+    left: 0;
+    right: 0;
+    -webkit-transform: translate3d(15em,0,0);
+    -moz-transform: translate3d(15em,0,0);
+    transform: translate3d(15em,0,0);
+}
+
+#nav-popup-popup {
+    width: 100px;
+    top: 200px;
+    background-image: url(../img/04.1_menu-background@1x.png);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .5);
+}
+
+
+#nav-popup {
+    
+}
+
+#nav-popup-head {
+    width: 29px;
+    background-image: url(../img/00.4_icon_menu@1x.png);
+    height: 20px;
+    left: 30px;
+    top: 21px;
+}
+
+#searchitem_close {
+    background-image: url(../img/04.1_marker@1x.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 45px;
+    padding: 0px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+#close-button-menu {
+    padding: 0px;
+    margin: 20px 10px 10px 32px;
+}
+
+#searchitem_search {
+    font-size: 16px;
+    background-image: url(../img/04.1_menu-icon-search@1x.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 30px;
+    text-align: center;
+    vertical-align: bottom;
+    font-family: SourceSansPro;
+    padding: 70px 0 0 0;
+}
+
+#searchitem_favorites {
+    font-size: 16px;
+    background-image: url(../img/04.1_menu-icon-favorite@1x.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 30px;
+    text-align: center;
+    vertical-align: bottom;
+    font-family: SourceSansPro;
+    padding: 70px 0 0 0;
+}
+
+#searchitem_info {
+    font-size: 16px;
+    background-image: url(../img/04.1_menu-icon-info@1x.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 30px;
+    text-align: center;
+    vertical-align: bottom;
+    font-family: SourceSansPro;
+    padding: 70px 0 0 0;
+}
+
+#searchitem_locating {
+    font-size: 16px;
+    background-image: url(../img/04.1_menu-icon-locating@1x.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 30px;
+    text-align: center;
+    vertical-align: bottom;
+    font-family: SourceSansPro;
+    padding: 70px 0 0 0;
+}
+
+#searchitem_sendlist {
+    font-size: 16px;
+    background-image: url(../img/04.1_menu-icon-schedule@1x.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 30px;
+    text-align: center;
+    vertical-align: bottom;
+    font-family: SourceSansPro;
+    padding: 70px 0 0 0;
+}
